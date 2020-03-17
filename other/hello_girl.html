@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="applicable-device" content="mobile">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <title>小姐姐你好呀</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+
+  <!-- 苹果专用 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="小姐姐你好呀">
+
+  <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+
+  <style type="text/css">
+    body {
+      padding: 30px;
+    }
+
+    .top {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+    }
+
+    .top-left {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .top-img {
+      width: 70%;
+      margin-bottom: 30px;
+    }
+
+    .bottom {
+      display: block;
+      margin-top: 20px;
+    }
+
+    #show-ok {
+      width: 100%;
+    }
+
+    #show-no {
+      width: 100%;
+    }
+  </style>
+</head>
+<script type="text/javascript">
+  var urls = new Array(
+    "https://music.163.com/#/song?id=418603077",
+    "https://movie.douban.com/subject/4920528/",
+    "https://movie.douban.com/subject/1292722/",
+    "https://movie.douban.com/subject/1292063/",
+    "https://movie.douban.com/subject/1292220/",
+    "https://movie.douban.com/subject/3319755/",
+    "https://movie.douban.com/subject/1291583/",
+    "https://music.163.com/#/song?id=97357",
+    "https://music.163.com/#/song?id=209326",
+    "https://music.163.com/#/song?id=537854958",
+    "https://www.xiami.com/song/fNdX92029?spm=a1z1s.3521865.23309997.68.nV4tHj",
+    "https://www.xiami.com/song/jZn7d8293?spm=a1z1s.3521865.23309997.145.nV4tHj",
+    "https://movie.douban.com/subject/26683290/");
+  var contents = new Array(
+    "\n保大",
+    "\n名字写你",
+    "\n我妈会游泳",
+    "\n都你做主",
+    "\n家务我来",
+    "\n生不生随你",
+    "\n工资主动上交",
+    "\n逛街不累",
+    "\n淘宝购物车自动清空",
+    "\n过年去你家"
+  );
+  var faces = new Array(
+    "(ಥ_ಥ)",
+    "/(ㄒoㄒ)/~~",
+    "T^T",
+    " ☆´∀｀☆ ",
+    "╥﹏╥...",
+    "O(∩_∩)O",
+    "（o´ﾟ□ﾟ`o）",
+    "<(￣︶￣)>>",
+    "(～￣▽￣)～",
+    "(ಥ_ಥ)"
+  );
+  var time = 0;
+  $(document).on("click", "#show-ok", function () {
+    $.alert("小姐姐答应了，安排上了", "o(*////▽////*)q", function () {
+      location.href = urls[Math.floor(Math.random() * urls.length)];
+    });
+  });
+
+  function onCancel() {
+    console.log(time);
+    $("#show-no").click();
+  }
+
+  function onOK() {
+    $("#show-ok").click();
+  }
+
+  function myConfirm(content, title, okFunction, cancelFunction) {
+    $.modal({
+      title: title,
+      text: content,
+      buttons: [{
+          text: "不好",
+          onClick: cancelFunction
+        },
+        {
+          text: "好",
+          onClick: okFunction
+        }
+      ]
+    });
+  }
+
+  $(document).on("click", "#show-no", function () {
+    var i = time % contents.length;
+    if (time == 0) {
+      $.alert(contents[0], faces[0], onCancel);
+    } else {
+      myConfirm(contents[i], faces[i], onOK, onCancel);
+    }
+    time = time + 1;
+  });
+</script>
+
+<body ontouchstart>
+  <div class="top">
+    <div class="top-left">
+      <img src="http://ws1.sinaimg.cn/bmiddle/9150e4e5gw1fbfkrb4zlhj2054053glj.jpg" class="top-img" />
+      <p>小姐姐观察你很久了</p>
+      <h1 style="margin-top: 10px">做我女朋友好不好呀？</h1>
+    </div>
+  </div>
+  <div class="bottom">
+    <a href="javascript:;" class="weui-btn weui-btn_primary" id="show-ok">好</a>
+    <a href="javascript:;" class="weui-btn weui-btn_warn" id="show-no">不好</a>
+  </div>
+</body>
+
+</html>

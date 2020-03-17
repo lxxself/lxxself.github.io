@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN,zh-TW,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+
+<script data-ad-client="ca-pub-2746515851002080" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lxxself.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="因为各种原因，会经常想用手机访问电脑目录，又因为各种原因，会经常想用电脑访问手机目录。在不是用数据线的情况下。然后发现ES文件管理器实现这样一种想法。其实是找到了官方的参考文档中的网络管理功能。不得不说，ES文件管理器是Android平台的一个良心之作。具体的操作一开始想自己操作，结果发现贴心的参考文档都有了，那我就搬运工下，然后部分地方说下自己的看法好了。然后再介绍另一个软件和方式。#电脑管理手">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现电脑手机文件目录互访共享或同步">
+<meta property="og:url" content="http://lxxself.com/2015-08-08-%E9%81%87%E8%A7%81/%E5%AE%9E%E7%8E%B0%E7%94%B5%E8%84%91%E6%89%8B%E6%9C%BA%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E4%BA%92%E8%AE%BF%E5%85%B1%E4%BA%AB%E6%88%96%E5%90%8C%E6%AD%A5/index.html">
+<meta property="og:site_name" content="LXXSELF">
+<meta property="og:description" content="因为各种原因，会经常想用手机访问电脑目录，又因为各种原因，会经常想用电脑访问手机目录。在不是用数据线的情况下。然后发现ES文件管理器实现这样一种想法。其实是找到了官方的参考文档中的网络管理功能。不得不说，ES文件管理器是Android平台的一个良心之作。具体的操作一开始想自己操作，结果发现贴心的参考文档都有了，那我就搬运工下，然后部分地方说下自己的看法好了。然后再介绍另一个软件和方式。#电脑管理手">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image025.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image026.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image027.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image028.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image029.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image030.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image031.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image032.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image033.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image034.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image035.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/001.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/002.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image009.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image010.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image011.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image012.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image013.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image014.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image015.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image016.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image017.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image018.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image019.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image020.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image021.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image022.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image023.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image024.gif">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/bt1.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/bt2.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/bt3.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150808/bt4.png">
+<meta property="article:published_time" content="2015-08-08T00:13:00.000Z">
+<meta property="article:modified_time" content="2018-11-29T15:32:37.000Z">
+<meta property="article:author" content="lxxself">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://photo.lxxself.com/blog/a/20150808/network_files/image025.jpg">
+
+<link rel="canonical" href="http://lxxself.com/2015-08-08-%E9%81%87%E8%A7%81/%E5%AE%9E%E7%8E%B0%E7%94%B5%E8%84%91%E6%89%8B%E6%9C%BA%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E4%BA%92%E8%AE%BF%E5%85%B1%E4%BA%AB%E6%88%96%E5%90%8C%E6%AD%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>实现电脑手机文件目录互访共享或同步 | LXXSELF</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101980994-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-101980994-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LXXSELF</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Feel The World</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lxxself.com/2015-08-08-%E9%81%87%E8%A7%81/%E5%AE%9E%E7%8E%B0%E7%94%B5%E8%84%91%E6%89%8B%E6%9C%BA%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E4%BA%92%E8%AE%BF%E5%85%B1%E4%BA%AB%E6%88%96%E5%90%8C%E6%AD%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lxxself">
+      <meta itemprop="description" content="Feel The World">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LXXSELF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          实现电脑手机文件目录互访共享或同步
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-08-08 08:13:00" itemprop="dateCreated datePublished" datetime="2015-08-08T08:13:00+08:00">2015-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-11-29 23:32:37" itemprop="dateModified" datetime="2018-11-29T23:32:37+08:00">2018-11-29</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015-08-08-%E9%81%87%E8%A7%81/%E5%AE%9E%E7%8E%B0%E7%94%B5%E8%84%91%E6%89%8B%E6%9C%BA%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E4%BA%92%E8%AE%BF%E5%85%B1%E4%BA%AB%E6%88%96%E5%90%8C%E6%AD%A5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015-08-08-遇见/实现电脑手机文件目录互访共享或同步/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>因为各种原因，会经常想用手机访问电脑目录，又因为各种原因，会经常想用电脑访问手机目录。<strong>在不是用数据线的情况下。</strong><br>然后发现<a href="http://www.estrongs.com/" target="_blank" rel="noopener">ES文件管理器</a>实现这样一种想法。其实是找到了官方的<a href="http://www.estrongs.com/eshelp/cn/ES_File_Explorer_User_Manual3.0.htm" target="_blank" rel="noopener">参考文档</a>中的<a href="http://www.estrongs.com/eshelp/cn/network.htm" target="_blank" rel="noopener">网络管理功能</a>。不得不说，<a href="http://www.estrongs.com/" target="_blank" rel="noopener">ES文件管理器</a>是Android平台的一个良心之作。<br>具体的操作一开始想自己操作，结果发现贴心的参考文档都有了，那我就搬运工下，然后部分地方说下自己的看法好了。<strong>然后再介绍另一个软件和方式。</strong><br>#电脑管理手机<br>只要保持手机和电脑在同一网络环境下，不需要数据线，也不需要通过其他客户端即可在电脑上远程对sdcard中的文件进行管理。</p>
+<h2 id="打开远程管理器"><a href="#打开远程管理器" class="headerlink" title="打开远程管理器"></a>打开远程管理器</h2><p>①  有两种方式，点击主页—工具中的“电脑管理手机”或者在快捷导航—网络中选择，点击打开后，您就会看到一个“ftp：//”的地址，这就是您设备的IP地址。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image025.jpg" alt=""></p>
+<p>②  这时在PC端的地址栏输入该地址，回车后就可以看到设备中的文件了。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image026.gif" alt=""><br>③ 可以点击远程管理器中的设置，自主设置端口、根目录、管理账号、编码等内容。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image027.gif" alt=""></p>
+<h2 id="快捷操作"><a href="#快捷操作" class="headerlink" title="快捷操作"></a>快捷操作</h2><p>①  为了方便手机端的操作，可以在设置中选择创建桌面快捷方式，如下图所示。这样就可以在退出ES的情况下，直接启动ES远程管理器。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image028.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image029.gif" alt=""></p>
+<p>②  为了方便电脑端的操作，可以双击打开计算机，在空白处点击右键，添加一个网络位置，如下图一步步填入ES远程管理器中显示的ftp地址就可以。这样就可以直接在计算机页面双击打开了。<br>不过要注意的是网络环境如果变化了，ftp地址也会相应变化，需要重新添加。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image030.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image031.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image032.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image033.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image034.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image035.gif" alt=""><br><strong>此处另一种做法</strong><br>在空白的地方右键创建快捷方式，填入 <strong>explorer.exe <a href="ftp://192.168.191.3:3721/">ftp://192.168.191.3:3721/</a></strong>，ftp地址改成自己手机上前面第三步中显示的那个即可。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/001.jpg" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/002.jpg" alt=""><br>#手机管理电脑<br>使用ES中的局域网功能，可以用安卓设备查看、复制电脑中共享的文件。根据权限设置的不同，编辑、删除文件，以及向电脑中指定的文件夹粘贴文件。前提是安卓设备和电脑要在同一网络环境下。</p>
+<p>##在电脑上设置想要共享的文件（以windows为例）</p>
+<p>①  为了共享文件的安全性，建议设置登录电脑的账号和密码。方法如下图所示。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image009.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image010.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image011.gif" alt=""></p>
+<p>②  右键单击想要共享的文件/文件夹/磁盘，设置共享、权限等（以磁盘为例）。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image012.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image013.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image014.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image015.gif" alt=""></p>
+<p>##ES中查看、操作共享文件</p>
+<p>①  打开ES文件浏览器，打开快捷导航—局域网，点击扫描，就能看到自己电脑的IP了。</p>
+<p>点击后输入用户名和密码，就可以查看或操作共享的文件了。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image016.gif" alt="">         <img src="https://photo.lxxself.com/blog/a/20150808/network_files/image017.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image018.jpg" alt="">         <img src="https://photo.lxxself.com/blog/a/20150808/network_files/image019.gif" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image020.jpg" alt=""></p>
+<p>②  如果局域网中的服务器太多，也可以直接点击新建添加所需的服务器，方法如下图。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image021.gif" alt=""></p>
+<p>③  服务器中常用的文件/文件夹可以长按—更多，将其加入服务器列表或添加到桌面，方便操作。</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image022.gif" alt="">         <img src="https://photo.lxxself.com/blog/a/20150808/network_files/image023.gif" alt=""><br><img src="https://photo.lxxself.com/blog/a/20150808/network_files/image024.gif" alt=""></p>
+<p>#小结<br>其实，ES文件管理器确实功能强大，具体的参看它的使用手册就好，我这只是搬运工和抛砖引玉，为了更加便捷地学习和工作还有玩耍。<br>然后还有两个问题要提示：</p>
+<ol>
+<li>FTP在电脑端打开的时候里面的图片、视频、文件都会默认调用浏览器打开，不知哪里设置的问题，还没解决。</li>
+<li>利用共享从手机端看电脑视频真的很棒啊啊啊！！！</li>
+<li>这样手机和电脑算是互通了，但是比起<a href="https://www.getsync.com/" target="_blank" rel="noopener">BTSync</a>，这样做有点分开的麻烦的意味。</li>
+</ol>
+<p>#不好意思，突然想起<a href="https://www.getsync.com/" target="_blank" rel="noopener">BTSync</a><br>##简介<br>BT sync 是一个文件同步工具，可以在几台不同的设备之间同步文件。其实说到用它进行文件目录互访有点大材小用或者说局限了。它可以在非局域网，在使用了相同同步密钥的客户端简进行文件的同步。当然如果处于局域网速度会更快，因为同步就不走互联网了。<br><a href="https://www.getsync.com/" target="_blank" rel="noopener">BTSync</a>原来是免费的但现在开始收费了，不过免费版的应该已经足够使用。<br>还有一点是，<a href="https://www.getsync.com/" target="_blank" rel="noopener">BTSync</a><strong>是同步，不是共享访问</strong>。也就是说所有在同步目录下的文件都会相当于复制一份在每个设备上，占用相应的物理空间。所以和ES文件管理器有所不同，各有优缺。<br>##操作</p>
+<ol>
+<li><p>下载安装好<a href="https://www.getsync.com/" target="_blank" rel="noopener">BTSync</a>，点击打开，新建同步文件夹。<br><img src="https://photo.lxxself.com/blog/a/20150808/bt1.jpg" alt=""></p>
+</li>
+<li><p>手机端安装该软件，再点开电脑端，使用手机添加文件然后扫一扫，即可，大功告成。赶紧试试吧。<br><img src="https://photo.lxxself.com/blog/a/20150808/bt2.jpg" alt=""><br><img src="https://photo.lxxself.com/blog/a/20150808/bt3.jpg" alt=""><br><img src="https://photo.lxxself.com/blog/a/20150808/bt4.png" alt=""></p>
+</li>
+<li><p>其实这货拿来备份手机上的图片是极好的，手机端打开也就是照片备份选项。或者拿来做不同设备间的文件迁移也是不错的，关键是还可以通过互联网同步，且不存在云端，每一个设备又都是云端。</p>
+</li>
+</ol>
+<hr>
+<p><strong>周末了，耍去吧！</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015-08-04-%E9%81%87%E8%A7%81/%E6%88%91%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%A8%8B%E5%BA%8F%E8%87%AA%E5%A4%87%E6%B8%85%E5%8D%95/" rel="prev" title="我的软件程序自备清单（update 20161014）">
+      <i class="fa fa-chevron-left"></i> 我的软件程序自备清单（update 20161014）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015-08-28-%E9%81%87%E8%A7%81/farbox%E6%96%87%E7%AB%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E9%93%BE%E6%8E%A5%E5%9C%A8%E6%96%B0%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80/" rel="next" title="farbox文章如何设置链接在新页面打开">
+      farbox文章如何设置链接在新页面打开 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#打开远程管理器"><span class="nav-number">1.</span> <span class="nav-text">打开远程管理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快捷操作"><span class="nav-number">2.</span> <span class="nav-text">快捷操作</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lxxself</p>
+  <div class="site-description" itemprop="description">Feel The World</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxxself</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lxxself.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://lxxself.com/2015-08-08-%E9%81%87%E8%A7%81/%E5%AE%9E%E7%8E%B0%E7%94%B5%E8%84%91%E6%89%8B%E6%9C%BA%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E4%BA%92%E8%AE%BF%E5%85%B1%E4%BA%AB%E6%88%96%E5%90%8C%E6%AD%A5/";
+    this.page.identifier = "2015-08-08-遇见/实现电脑手机文件目录互访共享或同步/";
+    this.page.title = "实现电脑手机文件目录互访共享或同步";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lxxself.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

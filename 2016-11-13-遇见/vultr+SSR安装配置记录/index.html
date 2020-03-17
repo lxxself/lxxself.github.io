@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN,zh-TW,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+
+<script data-ad-client="ca-pub-2746515851002080" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lxxself.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前几日因vultr优惠购买了几十美元的billing。vultr还是很优惠的。前几次没事搭建了日本和美国的SSR，速度均不理想，也变懒得理之。今天又拾起搭建试试，配上锐速，速度居然可以流畅看youtube 1080P，甚是震惊。尽管还是担忧后续会出现问题，但是现在也算是心满意足，记之。#SSR安装在vultr选择好服务器后，使用putty或xshell之类的软件连接服务器，这里省略。我选择的是日本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vultr+SSR安装配置记录">
+<meta property="og:url" content="http://lxxself.com/2016-11-13-%E9%81%87%E8%A7%81/vultr+SSR%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="LXXSELF">
+<meta property="og:description" content="前几日因vultr优惠购买了几十美元的billing。vultr还是很优惠的。前几次没事搭建了日本和美国的SSR，速度均不理想，也变懒得理之。今天又拾起搭建试试，配上锐速，速度居然可以流畅看youtube 1080P，甚是震惊。尽管还是担忧后续会出现问题，但是现在也算是心满意足，记之。#SSR安装在vultr选择好服务器后，使用putty或xshell之类的软件连接服务器，这里省略。我选择的是日本">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-11-12T18:11:00.000Z">
+<meta property="article:modified_time" content="2016-11-12T19:21:43.000Z">
+<meta property="article:author" content="lxxself">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lxxself.com/2016-11-13-%E9%81%87%E8%A7%81/vultr+SSR%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>vultr+SSR安装配置记录 | LXXSELF</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101980994-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-101980994-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LXXSELF</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Feel The World</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lxxself.com/2016-11-13-%E9%81%87%E8%A7%81/vultr+SSR%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lxxself">
+      <meta itemprop="description" content="Feel The World">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LXXSELF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vultr+SSR安装配置记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2016-11-13 02:11:00 / 修改时间：03:21:43" itemprop="dateCreated datePublished" datetime="2016-11-13T02:11:00+08:00">2016-11-13</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016-11-13-%E9%81%87%E8%A7%81/vultr+SSR%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016-11-13-遇见/vultr+SSR安装配置记录/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前几日因<a href="http://www.vultr.com/?ref=7023642" target="_blank" rel="noopener">vultr</a>优惠购买了几十美元的billing。<a href="http://www.vultr.com/?ref=7023642" target="_blank" rel="noopener">vultr</a>还是很优惠的。<br>前几次没事搭建了日本和美国的SSR，速度均不理想，也变懒得理之。今天又拾起搭建试试，配上锐速，速度居然可以流畅看youtube 1080P，甚是震惊。尽管还是担忧后续会出现问题，但是现在也算是心满意足，记之。<br>#SSR安装<br>在<a href="http://www.vultr.com/?ref=7023642" target="_blank" rel="noopener">vultr</a>选择好服务器后，使用putty或xshell之类的软件连接服务器，这里省略。我选择的是日本节点，centos7，$5/mo。<br>##安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;91yun&#x2F;shadowsocks_install&#x2F;master&#x2F;shadowsocksR.sh &amp;&amp; bash shadowsocksR.sh</span><br></pre></td></tr></table></figure>
+<p>一键安装脚本，加入了开机启动。一路默认或者按需修改就可，最后可以看见相应SSR的配置结果，适用相应客户端即可使用。<br>升级方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;usr&#x2F;local&#x2F;shadowsocks&#x2F;shadowsocks</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<p>常用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">启动：&#x2F;etc&#x2F;init.d&#x2F;shadowsocks start</span><br><span class="line">停止：&#x2F;etc&#x2F;init.d&#x2F;shadowsocks stop</span><br><span class="line">重启：&#x2F;etc&#x2F;init.d&#x2F;shadowsocks restart</span><br><span class="line">状态：&#x2F;etc&#x2F;init.d&#x2F;shadowsocks status</span><br><span class="line">卸载：.&#x2F;shadowsocksR.sh uninstall</span><br><span class="line"></span><br><span class="line">配置文件路径：&#x2F;etc&#x2F;shadowsocks.json</span><br><span class="line">日志文件路径：&#x2F;var&#x2F;log&#x2F;shadowsocks.log</span><br><span class="line">安装路径：&#x2F;usr&#x2F;local&#x2F;shadowsocks&#x2F;shadowsoks</span><br></pre></td></tr></table></figure>
+<p>##多用户配置<br>多用户配置只是多开几个端口并配置相应密码，一般给多个人用的时候会用到。<br>打开ssr的配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;shadowsocks.json</span><br></pre></td></tr></table></figure>
+<p>然后键入“i”进行编辑状态，删除server_address和password，增加以下类似配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">“port_password”:&#123;</span><br><span class="line">    “6666”:”password1″,</span><br><span class="line">    “9999”:”password2″</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>前者为端口，后者为密码。可以添加多个，然后按ESC退出编辑，键入:wq保存。然后<strong>重启SSR</strong>。大致如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;port_password&quot;:&#123;</span><br><span class="line">         &quot;8989&quot;:&quot;password0&quot;,             &#x2F;* 这个是你的SS端口和密码*&#x2F;</span><br><span class="line">         &quot;9001&quot;:&quot;password1&quot;,             &#x2F;* 这个是你的SS端口和密码*&#x2F;</span><br><span class="line">         &quot;9002&quot;:&quot;password2&quot;,            &#x2F;* 这个是你的SS端口和密码*&#x2F;</span><br><span class="line">         &quot;9003&quot;:&quot;password3&quot;,            &#x2F;* 这个是你的SS端口和密码*&#x2F;</span><br><span class="line">         &quot;9004&quot;:&quot;password4&quot;             &#x2F;* 这个是你的SS端口和密码,如果不够可以继续模仿增加*&#x2F;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,             &#x2F;* 这个是你的SS加密协议，*&#x2F;</span><br><span class="line">    &quot;fast_open&quot;: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处操作为linux相关文件编辑操作，可百度谷歌之。然而就此不算完，我遇到了个坑。增加了端口，<strong>你要开启这些端口</strong>。<br>分为大致两种方式开启这些增加的端口<br><strong>1.关闭防火墙</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables stop</span><br></pre></td></tr></table></figure>
+<p>如果是centos7的话则为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+<p> <strong>2.修改防火墙配置文件</strong><br> centos6适用，打开配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;sysconfig&#x2F;iptables</span><br></pre></td></tr></table></figure>
+<p>单端口的话，这样来 (如果有多个，请重复加行即可)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-A INPUT -p udp -m state --state NEW -m udp --dport 2333 -j ACCEPT</span><br><span class="line">-A INPUT -p tcp -m state --state NEW -m tcp --dport 2333 -j ACCEPT</span><br></pre></td></tr></table></figure>
+<p>如果是某一段端口范围的话，这样来 (例子为 2333 到 3333 中间的全打开)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-A INPUT -p udp -m state --state NEW -m udp --dport 2333:3333 -j ACCEPT</span><br><span class="line">-A INPUT -p tcp -m state --state NEW -m tcp --dport 2333:3333 -j ACCEPT</span><br></pre></td></tr></table></figure>
+<p>退出编辑并保存，重启 iptables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables restart</span><br></pre></td></tr></table></figure>
+<p>#锐速破解版安装<br>如果对速度不满意，或者想提高ssr的速度，可以适用锐速，当然网上有破解版出来那也就不好意思了。不过安装锐速后不敢保证速度一定会上去，甚至有时候反而会下降，这个确实看人品。除此之外，锐速的安装有一点令人蛋疼的，那就是服务器的内核必须与锐速版本相互匹配。因此基本上需要更换centos的内核。<br>##更换内核<br>我的vultr服务器是centos7，所以使用以下命令更换了内核：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh http:&#x2F;&#x2F;soft.91yun.org&#x2F;ISO&#x2F;Linux&#x2F;CentOS&#x2F;kernel&#x2F;kernel-3.10.0-229.1.2.el7.x86_64.rpm --force</span><br></pre></td></tr></table></figure>
+<p>查看内核是否安装成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep kernel</span><br></pre></td></tr></table></figure>
+<p>出现了刚才安装的3.10.0-229.1.2.el7.x86_64.rpm便安装成功了。<br>重启服务器并查看是否更换。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+<p>##锐速安装<br>下面来安装锐速了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;91yun&#x2F;serverspeeder&#x2F;master&#x2F;serverspeeder-all.sh&amp;&amp; bash serverspeeder-all.sh</span><br></pre></td></tr></table></figure>
+<p>如果内核匹配基本没什么问题，或者选择相近的内核版本即可。<br>其他相关命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chattr -i &#x2F;serverspeeder&#x2F;etc&#x2F;apx*&amp;&amp; &#x2F;serverspeeder&#x2F;bin&#x2F;serverSpeeder.sh uninstall –f  #卸载锐速</span><br><span class="line">&#x2F;serverspeeder&#x2F;bin&#x2F;serverSpeeder.sh start #启动锐速</span><br><span class="line">&#x2F;serverspeeder&#x2F;bin&#x2F;serverSpeeder.sh stop #停止锐速</span><br><span class="line">&#x2F;serverspeeder&#x2F;bin&#x2F;serverSpeeder.sh restart#重启锐速</span><br><span class="line">&#x2F;serverspeeder&#x2F;bin&#x2F;serverSpeeder.sh status#锐速运行状态</span><br></pre></td></tr></table></figure>
+<p>#测试<br>##服务器端口测试<br>这里有一个网站可以测试端口是否开启<a href="http://ports.sawseo.com/" target="_blank" rel="noopener">SawSeo Port Checker</a>。<br>##使用测试<br>使用客户端自己连接上去试试咯，我一般就打开<a href="https://www.youtube.com/" target="_blank" rel="noopener">youtube</a>看看。哦，对了，<strong>SSR也可以使用SS的客户端使用</strong>，因为SSR只是多了一些混淆配置。<br>#相关客户端</p>
+<ol>
+<li>SSR相关：<a href="http://pan.baidu.com/s/1o8OzHkI" target="_blank" rel="noopener">http://pan.baidu.com/s/1o8OzHkI</a> 密码: j7yd</li>
+<li>SS相关： <a href="http://pan.baidu.com/s/1gfHm0SV" target="_blank" rel="noopener">http://pan.baidu.com/s/1gfHm0SV</a> 密码: vfsy</li>
+</ol>
+<hr>
+<p><strong>参考链接</strong></p>
+<ol>
+<li><a href="https://www.91yun.org/zh/archives/2079" target="_blank" rel="noopener">自用SSR一键脚本分享</a></li>
+<li><a href="https://liyuans.com/archives/ssr-multi-user-configuration.html" target="_blank" rel="noopener">SS/SSR 多用户配置</a></li>
+<li><a href="http://www.centoscn.com/CentOS/help/2014/1030/4021.html" target="_blank" rel="noopener">CentOS关闭Linux防火墙(iptables) 及 SELinux</a></li>
+<li><a href="http://www.centoscn.com/CentOS/config/2015/0701/5768.html" target="_blank" rel="noopener">CentOS7 防火墙关闭</a></li>
+<li><a href="https://www.91yun.org/archives/795" target="_blank" rel="noopener">CentOS更换内核，提供锐速可用的内核下载</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015-12-05-%E9%81%87%E8%A7%81/%E8%AE%B0%E5%9B%BD%E5%86%85Google%20Play%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7%E6%B3%A8%E5%86%8C/" rel="prev" title="记国内Google Play开发者账号注册">
+      <i class="fa fa-chevron-left"></i> 记国内Google Play开发者账号注册
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017-05-15-%E9%81%87%E8%A7%81/V2Ray%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/" rel="next" title="V2Ray环境搭建和配置记录">
+      V2Ray环境搭建和配置记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lxxself</p>
+  <div class="site-description" itemprop="description">Feel The World</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxxself</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lxxself.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://lxxself.com/2016-11-13-%E9%81%87%E8%A7%81/vultr+SSR%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/";
+    this.page.identifier = "2016-11-13-遇见/vultr+SSR安装配置记录/";
+    this.page.title = "vultr+SSR安装配置记录";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lxxself.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

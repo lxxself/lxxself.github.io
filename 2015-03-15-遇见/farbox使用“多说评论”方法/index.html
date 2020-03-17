@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN,zh-TW,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+
+<script data-ad-client="ca-pub-2746515851002080" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lxxself.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="farbox使用“多说评论”方法今天突然兴起想给自己的farbox弄个第三方评论，以便在日后能有人评论（如果有的话）。在farbox后台管理中看到了多说设置，需要设置多说ID。于是就搜索多说ID是个什么鬼，无果，甚至我搜索farbox如何使用多说评论都每人说，想必是太简单了大家都懒得说（哭。。索性我就登录自己的多说自己找，因为之前的一个站点有过多说，所以又多建立了一个，取了了名字设置域名，还是没发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="farbox使用“多说评论”方法">
+<meta property="og:url" content="http://lxxself.com/2015-03-15-%E9%81%87%E8%A7%81/farbox%E4%BD%BF%E7%94%A8%E2%80%9C%E5%A4%9A%E8%AF%B4%E8%AF%84%E8%AE%BA%E2%80%9D%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="LXXSELF">
+<meta property="og:description" content="farbox使用“多说评论”方法今天突然兴起想给自己的farbox弄个第三方评论，以便在日后能有人评论（如果有的话）。在farbox后台管理中看到了多说设置，需要设置多说ID。于是就搜索多说ID是个什么鬼，无果，甚至我搜索farbox如何使用多说评论都每人说，想必是太简单了大家都懒得说（哭。。索性我就登录自己的多说自己找，因为之前的一个站点有过多说，所以又多建立了一个，取了了名字设置域名，还是没发">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/duoshuo2.png">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/duoshuo5.png">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/duoshuo1.png">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/duoshuo3.png">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/duoshuo4.png">
+<meta property="article:published_time" content="2015-03-15T15:17:00.000Z">
+<meta property="article:modified_time" content="2018-11-29T15:34:29.000Z">
+<meta property="article:author" content="lxxself">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://photo.lxxself.com/blog/a/duoshuo2.png">
+
+<link rel="canonical" href="http://lxxself.com/2015-03-15-%E9%81%87%E8%A7%81/farbox%E4%BD%BF%E7%94%A8%E2%80%9C%E5%A4%9A%E8%AF%B4%E8%AF%84%E8%AE%BA%E2%80%9D%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>farbox使用“多说评论”方法 | LXXSELF</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101980994-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-101980994-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LXXSELF</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Feel The World</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lxxself.com/2015-03-15-%E9%81%87%E8%A7%81/farbox%E4%BD%BF%E7%94%A8%E2%80%9C%E5%A4%9A%E8%AF%B4%E8%AF%84%E8%AE%BA%E2%80%9D%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lxxself">
+      <meta itemprop="description" content="Feel The World">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LXXSELF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          farbox使用“多说评论”方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-03-15 23:17:00" itemprop="dateCreated datePublished" datetime="2015-03-15T23:17:00+08:00">2015-03-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-11-29 23:34:29" itemprop="dateModified" datetime="2018-11-29T23:34:29+08:00">2018-11-29</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015-03-15-%E9%81%87%E8%A7%81/farbox%E4%BD%BF%E7%94%A8%E2%80%9C%E5%A4%9A%E8%AF%B4%E8%AF%84%E8%AE%BA%E2%80%9D%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015-03-15-遇见/farbox使用“多说评论”方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>farbox使用“多说评论”方法<br>今天突然兴起想给自己的farbox弄个第三方评论，以便在日后能有人评论（如果有的话）。在farbox后台管理中看到了多说设置，需要设置多说ID。于是就搜索多说ID是个什么鬼，无果，甚至我搜索farbox如何使用多说评论都每人说，想必是太简单了大家都懒得说（哭。。<br>索性我就登录自己的多说自己找，因为之前的一个站点有过多说，所以又多建立了一个，取了了名字设置域名，还是没发现什么事多说ID。<br>不过看到这个，我就觉得原来如此。<br><img src="https://photo.lxxself.com/blog/a/duoshuo2.png" alt="image"><br>因为我在farbox后台也看到过插入脚本的地方。<br><img src="https://photo.lxxself.com/blog/a/duoshuo5.png" alt="image"><br>复制进去之后好像一切正常，但是发现一是位置不对，会出现在html的footer下面，二是文章传到多说后台的参数不对，无论我怎么设置。虽然倒最后也没设置成功，但至少知道了各个参数的意思。</p>
+<ul>
+<li>data-thread-key 指的是文章ID，文章唯一识别值</li>
+<li>data-title指的是文章标题</li>
+<li>data-url指的是文章链接<br><img src="https://photo.lxxself.com/blog/a/duoshuo1.png" alt="image"><br><em>圈中出应该显示文章标题</em><br>根据farbox的语法，应该是像这样的，但是我试了{post.title}}，两者都不是，无果，等以后再说吧。<br>那来说说最后是怎么设置成功的吧。十分简单啊！！！卧槽<br>还是那个多说ID，直接填写多说ID。<br><img src="https://photo.lxxself.com/blog/a/duoshuo3.png" alt="image"><br>那什么是多说ID呢，就是你新建的多说域名的前缀，就像我farbox域名的前缀，<a href="lxxself.farbox.com">lxxself.farbox.com</a>中的lxxself。<br>然后就自动会有以下效果。<br><img src="https://photo.lxxself.com/blog/a/duoshuo4.png" alt="image"><br>以上，真是我太笨了，不过依然多说后台传去的参数不对，虽然链接正确。而那个js脚本理论上也是可以对的，也可以插入到模板源代码。模板的话有机会做一个咯。<br>以上以上，太笨太笨。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015-03-14-%E9%81%87%E8%A7%81/%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5%E6%94%B6%E9%9B%86%E6%A1%8C%E9%9D%A2%E8%BD%AF%E4%BB%B6_Gso/" rel="prev" title="代码片段收集桌面软件 Gisto">
+      <i class="fa fa-chevron-left"></i> 代码片段收集桌面软件 Gisto
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015-03-16-%E9%81%87%E8%A7%81/Shadowsocks%E8%AE%BE%E7%BD%AE%E5%B1%80%E5%9F%9F%E7%BD%91%E5%85%B1%E4%BA%AB/" rel="next" title="Shadowsocks设置局域网共享">
+      Shadowsocks设置局域网共享 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lxxself</p>
+  <div class="site-description" itemprop="description">Feel The World</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxxself</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lxxself.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://lxxself.com/2015-03-15-%E9%81%87%E8%A7%81/farbox%E4%BD%BF%E7%94%A8%E2%80%9C%E5%A4%9A%E8%AF%B4%E8%AF%84%E8%AE%BA%E2%80%9D%E6%96%B9%E6%B3%95/";
+    this.page.identifier = "2015-03-15-遇见/farbox使用“多说评论”方法/";
+    this.page.title = "farbox使用“多说评论”方法";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lxxself.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN,zh-TW,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+
+<script data-ad-client="ca-pub-2746515851002080" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lxxself.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="手上用了两年的小米2S神机，在前几天频繁自动关机后送到售后被宣布主板损坏，寿终正寝。然而为什么都坏了怎么变身Nexus呢，原因是发现换了块电池板后居然一直没自动关机，看他这样能用多久吧，索性也就拿它来做实验好了，毕竟已下手小米Note作为日常使用，作为他的接班。虽然依然有些不舍，和对Note有些不满意。首先申明下参考文章：小米2S刷秋叶随风合并分区版的Android 5.1.1 (含google服">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小米2S变身Nexus记（刷原生Android5.1系统）">
+<meta property="og:url" content="http://lxxself.com/2015-07-19-%E9%81%87%E8%A7%81/%E5%B0%8F%E7%B1%B32S%E5%8F%98%E8%BA%ABNxus%E8%AE%B0%EF%BC%88%E5%88%B7%E5%8E%9F%E7%94%9FAndrod5_1%E7%B3%BB%E7%BB%9F%EF%BC%89/index.html">
+<meta property="og:site_name" content="LXXSELF">
+<meta property="og:description" content="手上用了两年的小米2S神机，在前几天频繁自动关机后送到售后被宣布主板损坏，寿终正寝。然而为什么都坏了怎么变身Nexus呢，原因是发现换了块电池板后居然一直没自动关机，看他这样能用多久吧，索性也就拿它来做实验好了，毕竟已下手小米Note作为日常使用，作为他的接班。虽然依然有些不舍，和对Note有些不满意。首先申明下参考文章：小米2S刷秋叶随风合并分区版的Android 5.1.1 (含google服">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150719/flash.jpg">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150719/Android3.png">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150719/Android1.png">
+<meta property="og:image" content="https://photo.lxxself.com/blog/a/20150719/Android2.png">
+<meta property="article:published_time" content="2015-07-19T10:34:00.000Z">
+<meta property="article:modified_time" content="2018-11-29T15:33:41.000Z">
+<meta property="article:author" content="lxxself">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://photo.lxxself.com/blog/a/20150719/flash.jpg">
+
+<link rel="canonical" href="http://lxxself.com/2015-07-19-%E9%81%87%E8%A7%81/%E5%B0%8F%E7%B1%B32S%E5%8F%98%E8%BA%ABNxus%E8%AE%B0%EF%BC%88%E5%88%B7%E5%8E%9F%E7%94%9FAndrod5_1%E7%B3%BB%E7%BB%9F%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>小米2S变身Nexus记（刷原生Android5.1系统） | LXXSELF</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101980994-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-101980994-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LXXSELF</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Feel The World</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lxxself.com/2015-07-19-%E9%81%87%E8%A7%81/%E5%B0%8F%E7%B1%B32S%E5%8F%98%E8%BA%ABNxus%E8%AE%B0%EF%BC%88%E5%88%B7%E5%8E%9F%E7%94%9FAndrod5_1%E7%B3%BB%E7%BB%9F%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lxxself">
+      <meta itemprop="description" content="Feel The World">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LXXSELF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          小米2S变身Nexus记（刷原生Android5.1系统）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-07-19 18:34:00" itemprop="dateCreated datePublished" datetime="2015-07-19T18:34:00+08:00">2015-07-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-11-29 23:33:41" itemprop="dateModified" datetime="2018-11-29T23:33:41+08:00">2018-11-29</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015-07-19-%E9%81%87%E8%A7%81/%E5%B0%8F%E7%B1%B32S%E5%8F%98%E8%BA%ABNxus%E8%AE%B0%EF%BC%88%E5%88%B7%E5%8E%9F%E7%94%9FAndrod5_1%E7%B3%BB%E7%BB%9F%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015-07-19-遇见/小米2S变身Nxus记（刷原生Androd5_1系统）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>手上用了两年的小米2S神机，在前几天频繁自动关机后送到售后被宣布主板损坏，寿终正寝。然而为什么都坏了怎么变身Nexus呢，原因是发现换了块电池板后居然一直没自动关机，看他这样能用多久吧，索性也就拿它来做实验好了，毕竟已下手小米Note作为日常使用，作为他的接班。虽然依然有些不舍，和对Note有些不满意。<br>首先申明下参考文章：<a href="http://tw.miui.com/thread-17954-1-1.html" target="_blank" rel="noopener">小米2S刷秋叶随风合并分区版的Android 5.1.1 (含google服务)</a><br>#准备工具</p>
+<ol>
+<li>第三方Recovery</li>
+<li>原生Android5.1刷机ROM</li>
+<li>google服务包</li>
+</ol>
+<p>下载地址： <a href="http://pan.baidu.com/s/1gddFhSZ" target="_blank" rel="noopener">http://pan.baidu.com/s/1gddFhSZ</a> 密码: yyen<br>#刷机步骤<br>首先小米2S必须已经合并分区，如果之前用的MIUI 6 最新版本的一般就是合并分区了，如果不是的下载小米助手刷机线刷到MIUI 6最新开发版。再开始以下步骤。步骤很简单，整个刷机过程大概半小时就要好了。</p>
+<ol>
+<li><p>将ROM和google服务包放到手机根目录（压缩包形式）</p>
+</li>
+<li><p>关机进去fastboot（关机后长按音量下+电源键）</p>
+</li>
+<li><p>解压并打开recovery，双击flash.bat执行，如果卡在了booting很久，把电池后继续该步骤，直到出现下图，即进入了recovery界面<br><img src="https://photo.lxxself.com/blog/a/20150719/flash.jpg" alt=""></p>
+</li>
+<li><p>选择系统一，选择清除数据恢复出厂和清楚cache分区</p>
+</li>
+<li><p>选择安装zip刷机包，在0下面找到aosp-aries-5.5.3-Vv1zRSVsav-5.1.0.zip，开始安装，等待刷机完成</p>
+</li>
+<li><p>同5操作刷入google服务包（根据自己需要输入，也可以之后进入系统后通过应用商店安装）</p>
+</li>
+<li><p>以上完成后选择重启手机，开机时间会略长，大概在5-10分钟左右<br>这样就算刷机完成了。再讲一下进入系统的一些注意事项。</p>
+</li>
+</ol>
+<p>#注意事项</p>
+<ol>
+<li>首先最后将手机连接至能科学上网的网络</li>
+<li>进入系统后会选择语言然后选择wifi网络，连接后会检测网络，需要几分钟的样子，也可以跳过，总之耐心等待</li>
+<li>进入系统后可以进行ROOT：设置-&gt;SuperSU-&gt;设置-&gt;底端的开启专业版打钩并重启</li>
+</ol>
+<p>#开启Google Now功能（大陆地区）<br>这个功能还是很赞的，之前使用MIUI 6 的小米2S我是装了Google服务和开启这个功能的，不过过程会有些蛋疼和未知。当时参考的是知乎上的一种方法：<a href="http://www.zhihu.com/question/21486890" target="_blank" rel="noopener">在中国怎么开启 Android 设备完整的 Google Now 功能？</a>。但是今天居然不行，试了好几次依然未果，只好以后再说。也不纠结好了，这个倒是折腾了我好一会好生郁闷。设置好后更。<br><strong>速度更新亲测可用方法</strong><br>参考自：<a href="http://maybeiwill.me/location-report-enabler/" target="_blank" rel="noopener">http://maybeiwill.me/location-report-enabler/</a><br>适用于任何已经有Google服务的安卓手机。</p>
+<ol>
+<li>首先确保你的手机是已经 Root 过的</li>
+<li>移除 Google 账号（最好清除一下吧）</li>
+<li>下载<a href="https://github.com/GhostFlying/LocationReportEnabler" target="_blank" rel="noopener">LocationReportEnabler</a>这个APP（百度云地址：<a href="http://pan.baidu.com/s/1sjn4mkt" target="_blank" rel="noopener">http://pan.baidu.com/s/1sjn4mkt</a> 密码: etx7）</li>
+<li>再次添加 Google 账号</li>
+<li>确保科学上网，确保能连上 Google 的服务器，就可以启用 Google Now 了</li>
+<li>可能一开始会弹出一个不可用的提示，进入到设置界面启用即时贴就可以</li>
+</ol>
+<p><strong>尽情享用吧！</strong></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150719/Android3.png" alt=""></p>
+<p>#使用感受<br>因为也是刚刷成功，也是第一次在实体机上见到原生的Android系统，第一印象不错。</p>
+<ol>
+<li>系统整体流畅无卡顿，应该说十分流畅！</li>
+<li>全部布局设计都采用Material Design设计模式设计，给人很舒服很清新的感觉。</li>
+<li>有很多手势滑动的操作。，切换动画效果甚是自然，简直视觉享受。</li>
+</ol>
+<p>还需一段时间使用体验，回头补充吧。<br>附截图（顺便说下截图方法：按住音量下+电源键 1-2秒）</p>
+<p><img src="https://photo.lxxself.com/blog/a/20150719/Android1.png" alt=""></p>
+<p><img src="https://photo.lxxself.com/blog/a/20150719/Android2.png" alt=""></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015-07-16-%E9%9B%B6%E7%A2%8E/%E8%B6%81%E8%BF%98%E6%97%A9/" rel="prev" title="趁还早">
+      <i class="fa fa-chevron-left"></i> 趁还早
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015-08-04-%E9%81%87%E8%A7%81/%E6%88%91%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%A8%8B%E5%BA%8F%E8%87%AA%E5%A4%87%E6%B8%85%E5%8D%95/" rel="next" title="我的软件程序自备清单（update 20161014）">
+      我的软件程序自备清单（update 20161014） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lxxself</p>
+  <div class="site-description" itemprop="description">Feel The World</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxxself</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lxxself.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://lxxself.com/2015-07-19-%E9%81%87%E8%A7%81/%E5%B0%8F%E7%B1%B32S%E5%8F%98%E8%BA%ABNxus%E8%AE%B0%EF%BC%88%E5%88%B7%E5%8E%9F%E7%94%9FAndrod5_1%E7%B3%BB%E7%BB%9F%EF%BC%89/";
+    this.page.identifier = "2015-07-19-遇见/小米2S变身Nxus记（刷原生Androd5_1系统）/";
+    this.page.title = "小米2S变身Nexus记（刷原生Android5.1系统）";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lxxself.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
