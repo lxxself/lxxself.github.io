@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN,zh-TW,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+<script data-ad-client="ca-pub-2746515851002080" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lxxself.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="gost是什么 Github 文档  依据官网和文档的介绍  GO Simple Tunnel - a simple tunnel written in golangGO语言实现的安全隧道  我也是在机缘巧合的情况下知道这个开源软件的。一次读到大佬左耳朵耗子的一篇在github上的文章————《科学上网》。其中介绍了一些他对当下科学上网方式的介绍和探讨，大部分我曾经都有所耳闻和甚至使用过。除了用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的gost实践(一)">
+<meta property="og:url" content="http://lxxself.com/2020-04-28-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5(%E4%B8%80)/index.html">
+<meta property="og:site_name" content="LXXSELF">
+<meta property="og:description" content="gost是什么 Github 文档  依据官网和文档的介绍  GO Simple Tunnel - a simple tunnel written in golangGO语言实现的安全隧道  我也是在机缘巧合的情况下知道这个开源软件的。一次读到大佬左耳朵耗子的一篇在github上的文章————《科学上网》。其中介绍了一些他对当下科学上网方式的介绍和探讨，大部分我曾经都有所耳闻和甚至使用过。除了用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/lxxself/lxxself.github.io/photos/blog/b/20200428/15880834507587.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/lxxself/lxxself.github.io/photos/blog/b/20200428/15880842837831.jpg">
+<meta property="article:published_time" content="2020-04-28T13:24:03.000Z">
+<meta property="article:modified_time" content="2020-04-28T13:24:03.000Z">
+<meta property="article:author" content="lxxself">
+<meta property="article:tag" content="上网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/lxxself/lxxself.github.io/photos/blog/b/20200428/15880834507587.jpg">
+
+<link rel="canonical" href="http://lxxself.com/2020-04-28-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5(%E4%B8%80)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>我的gost实践(一) | LXXSELF</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101980994-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-101980994-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LXXSELF</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Feel The World</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-file">
+
+    <a href="http://dsm.lxx.im:9003/" rel="noopener" target="_blank"><i class="fa fa-fw fa-file"></i>文件</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lxxself.com/2020-04-28-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5(%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Author">
+      <meta itemprop="description" content="Feel The World">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LXXSELF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          我的gost实践(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-28 21:24:03" itemprop="dateCreated datePublished" datetime="2020-04-28T21:24:03+08:00">2020-04-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">记录</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020-04-28-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5(%E4%B8%80)/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-04-28-记录/我的gost实践(一)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="gost是什么"><a href="#gost是什么" class="headerlink" title="gost是什么"></a>gost是什么</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ginuerzh/gost">Github</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.ginuerzh.xyz/gost/">文档</a></li>
+</ul>
+<p>依据官网和文档的介绍</p>
+<blockquote>
+<p>GO Simple Tunnel - a simple tunnel written in golang<br>GO语言实现的安全隧道</p>
+</blockquote>
+<p>我也是在机缘巧合的情况下知道这个开源软件的。一次读到大佬<a target="_blank" rel="noopener" href="https://coolshell.cn/haoel">左耳朵耗子</a>的一篇在github上的文章————<a target="_blank" rel="noopener" href="https://github.com/haoel/haoel.github.io">《科学上网》</a>。其中介绍了一些他对当下科学上网方式的介绍和探讨，大部分我曾经都有所耳闻和甚至使用过。除了<a target="_blank" rel="noopener" href="https://github.com/haoel/haoel.github.io#33-%E7%94%A8-gost-%E8%AE%BE%E7%BD%AE-https-%E6%9C%8D%E5%8A%A1">用 gost 设置 HTTPS 服务</a>让我眼前一亮。<br>说白了gost就是一款代理软件，往正常了说就像是<a target="_blank" rel="noopener" href="https://www.proxifier.com/">Proxifier</a>这一类普通的代理客户端，往科学上网方向说则也能成为ss/ssr/v2ray之类的代理客户端。然而它功能的强大之处就在于它支持的协议和类型是如此丰富和灵活，以及它算不上为科学上网而生的，关键在于使用的人如何去用它。你确实可以如上所说使用https服务或内置的ss去翻越长城，但你也可以仅仅只是做http、socks5的简单代理或者端口转发或者加密隧道等等。循着文档，有很多有趣的玩法。</p>
+<h1 id="准备前提"><a href="#准备前提" class="headerlink" title="准备前提"></a>准备前提</h1><p>以科学上网作为gost的实践。</p>
+<ul>
+<li>一台及其以上国外VPS</li>
+<li>一个域名</li>
+</ul>
+<h1 id="gost安装"><a href="#gost安装" class="headerlink" title="gost安装"></a>gost安装</h1><p>根据官网，简单做了个安装脚本，适用于64位linux。其他平台同样可以在<a target="_blank" rel="noopener" href="https://github.com/ginuerzh/gost/releases">release</a>页面下载并使用。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">/bin/sh</span></span><br><span class="line">mkdir gost</span><br><span class="line">cd gost</span><br><span class="line">wget -O gost.gz https://github.com/ginuerzh/gost/releases/download/v2.11.0/gost-linux-amd64-2.11.0.gz</span><br><span class="line">gzip gost.gz -d</span><br><span class="line">chmod 777 gost</span><br><span class="line">ln gost /usr/bin/gost</span><br></pre></td></tr></table></figure>
+<p>复制到文件或下载<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/lxxself/SomeShell/master/install_gost.sh">install_gost.sh</a>然后root权限下运行<code>sh install_gost.sh</code>即可。（不具备普遍适用性，请根据自身需求修改）<br>如果安装成功，在终端输入gost将会看到如下提示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-C string</span><br><span class="line">  	configure file</span><br><span class="line">-D	enable debug log</span><br><span class="line">-F value</span><br><span class="line">  	forward address, can make a forward chain</span><br><span class="line">-L value</span><br><span class="line">  	listen address, can listen on multiple ports (required)</span><br><span class="line">-V	print version</span><br><span class="line">-obfs4-distBias</span><br><span class="line">  	Enable obfs4 using ScrambleSuit style table generation</span><br></pre></td></tr></table></figure>
+
+<h1 id="设置https服务"><a href="#设置https服务" class="headerlink" title="设置https服务"></a>设置https服务</h1><p>参考上文左耳朵耗子的方式设置https服务。关于SSL证书的部署，可以使用他提到的<a target="_blank" rel="noopener" href="https://certbot.eff.org/instructions">certbot</a>也可以是更简单的<a target="_blank" rel="noopener" href="https://caddyserver.com/">caddy</a>。<br>我此处参照设置的SSL<a target="_blank" rel="noopener" href="https://www.moerats.com/archives/900/">使用Caddy申请免费的Let’s Encrypt泛域名SSL证书</a>。<br>当然最好是先添加域名的A记录，将要设置的子域名指向这台VPS。<br>然后就是运行gost服务，我对大佬原本跑docker的脚本做了点小修改，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!bin/sh</span></span><br><span class="line">USER=&quot;用户名&quot;</span><br><span class="line">PASS=&quot;密码&quot;</span><br><span class="line">PORT=443</span><br><span class="line">BIND_IP=0.0.0.0</span><br><span class="line">CERT=&quot;SSL证书公钥路径&quot;</span><br><span class="line">KEY=&quot;SSL证书密钥路径&quot;</span><br><span class="line">nohup gost -L &quot;http2://$&#123;USER&#125;:$&#123;PASS&#125;@$&#123;BIND_IP&#125;:$&#123;PORT&#125;?cert=$&#123;CERT&#125;&amp;key=$&#123;KEY&#125;&amp;probe_resist=code:404&amp;knock=www.google.com&quot; &gt; https.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p>其他中文部分自行修改，caddy产生的路径一般是这样子的：’/etc/ssl/caddy/acme/acme-v02.api.letsencrypt.org/sites/a.b.com/a.b.com.crt’和’/etc/ssl/caddy/acme/acme-v02.api.letsencrypt.org/sites/a.b.com/a.b.com.key’<br>运行后，可以使用<code>tail -f https.log</code>查看是否运行成功，同时确保443端口开放。此时在电脑端或手机端连入，正常的话将看到日志。</p>
+<h1 id="https服务的使用"><a href="#https服务的使用" class="headerlink" title="https服务的使用"></a>https服务的使用</h1><h2 id="浏览器端"><a href="#浏览器端" class="headerlink" title="浏览器端"></a>浏览器端</h2><p>熟悉的朋友或是有经验的朋友必是在浏览器装有<a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/padekgcemlokbadohgkifijomclgjgif">Proxy SwitchyOmega</a>的，直接可以使用它，代理协议选择https并填写用户名密码即可。<br><img src="https://cdn.jsdelivr.net/gh/lxxself/lxxself.github.io/photos/blog/b/20200428/15880834507587.jpg"></p>
+<h2 id="电脑端"><a href="#电脑端" class="headerlink" title="电脑端"></a>电脑端</h2><p>不论是Mac还是Win都可以用gost再次做客户端，因为gost事实上来说没有绝对意义上的服务器端和客户端，像是两个节点相互通信一样。类似上文的安装，成功后在终端运行如下即可连接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gost -L&#x3D;:1000 -F&#x3D;http2:&#x2F;&#x2F;$&#123;USER&#125;:$&#123;PASS&#125;@$&#123;BIND_IP&#125;:$&#123;PORT&#125;</span><br></pre></td></tr></table></figure>
+<p>变量与上文相同即是，这样就在本地开了一个同时支持http和socks5的代理，端口为1000，对于telegram类支持代理的软件可以直接填入，浏览器的话则需要上文的Proxy SwitchyOmega帮忙。</p>
+<h2 id="IOS端"><a href="#IOS端" class="headerlink" title="IOS端"></a>IOS端</h2><p>小火箭shadowrocket如下，类型HTTPS与HTTP2均可。<br><img src="https://cdn.jsdelivr.net/gh/lxxself/lxxself.github.io/photos/blog/b/20200428/15880842837831.jpg" alt="-w335"></p>
+<h2 id="Android端"><a href="#Android端" class="headerlink" title="Android端"></a>Android端</h2><p>Android可以使用<a target="_blank" rel="noopener" href="https://manual.getsurfboard.com/">Surfboard</a>，具体参照它的官网吧。关于它的使用其实也可小写一番的说。</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>关于使用https方式翻越城墙，到目前为止未有翻车，尽管在速度上似乎是有一些限制。当然网上也有很多人使用gost的其他协议，例如使用relay、ss或转发等等。总之，gost是一个可玩性很高的软件。尽管并没有尝试gost文档里所有的方式，但我后来的一些组合操作让我甚是使用舒服。例如其他的一些实践：内网组网+KCP、DNS代理解锁奈飞、端口转发+负载均衡等等。<br>站在巨人的肩膀上，才有我们如今的享受。感谢开发者。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%B8%8A%E7%BD%91/" rel="tag"># 上网</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020-03-17-%E8%AE%B0%E5%BD%95/%E4%BF%AE%E6%94%B9Next%E4%B8%BB%E9%A2%98%E9%A6%96%E9%A1%B5%E6%91%98%E8%A6%81%E6%98%BE%E7%A4%BA/" rel="prev" title="修改Next主题首页摘要显示">
+      <i class="fa fa-chevron-left"></i> 修改Next主题首页摘要显示
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020-05-01-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5(%E4%BA%8C)/" rel="next" title="我的gost实践(二)">
+      我的gost实践(二) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gost%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">gost是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%89%8D%E6%8F%90"><span class="nav-number">2.</span> <span class="nav-text">准备前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gost%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">gost安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEhttps%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">设置https服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#https%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">https服务的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AB%AF"><span class="nav-number">5.1.</span> <span class="nav-text">浏览器端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E8%84%91%E7%AB%AF"><span class="nav-number">5.2.</span> <span class="nav-text">电脑端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOS%E7%AB%AF"><span class="nav-number">5.3.</span> <span class="nav-text">IOS端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E7%AB%AF"><span class="nav-number">5.4.</span> <span class="nav-text">Android端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Author</p>
+  <div class="site-description" itemprop="description">Feel The World</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Author</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lxxself.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://lxxself.com/2020-04-28-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5(%E4%B8%80)/";
+    this.page.identifier = "2020-04-28-记录/我的gost实践(一)/";
+    this.page.title = "我的gost实践(一)";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lxxself.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

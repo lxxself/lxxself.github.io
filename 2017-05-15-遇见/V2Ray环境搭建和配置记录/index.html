@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN,zh-TW,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+<script data-ad-client="ca-pub-2746515851002080" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lxxself.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="#V2Ray简介  V2Ray 是一个模块化的代理软件包，它的目标是提供常用的代理软件模块，简化网络代理软件的开发  说白了白说了，知道这是一个可以带你翻墙带你飞的东西就好了，像是Shadowsocks一样。尽管他们并不是兄弟关系，不论是开发初衷，功能还是配置等方面、我个人是这样理解的，Shadowsocks就像是唯品会，V2Ray就像是淘宝。都可以剁手买买买，但是前者基本上是服装类，后者除了服装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="V2Ray环境搭建和配置记录">
+<meta property="og:url" content="http://lxxself.com/2017-05-15-%E9%81%87%E8%A7%81/V2Ray%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="LXXSELF">
+<meta property="og:description" content="#V2Ray简介  V2Ray 是一个模块化的代理软件包，它的目标是提供常用的代理软件模块，简化网络代理软件的开发  说白了白说了，知道这是一个可以带你翻墙带你飞的东西就好了，像是Shadowsocks一样。尽管他们并不是兄弟关系，不论是开发初衷，功能还是配置等方面、我个人是这样理解的，Shadowsocks就像是唯品会，V2Ray就像是淘宝。都可以剁手买买买，但是前者基本上是服装类，后者除了服装">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-05-14T16:35:00.000Z">
+<meta property="article:modified_time" content="2017-05-14T16:35:00.000Z">
+<meta property="article:author" content="lxxself">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lxxself.com/2017-05-15-%E9%81%87%E8%A7%81/V2Ray%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>V2Ray环境搭建和配置记录 | LXXSELF</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101980994-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-101980994-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LXXSELF</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Feel The World</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-file">
+
+    <a href="http://dsm.lxx.im:9003/" rel="noopener" target="_blank"><i class="fa fa-fw fa-file"></i>文件</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lxxself.com/2017-05-15-%E9%81%87%E8%A7%81/V2Ray%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Author">
+      <meta itemprop="description" content="Feel The World">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LXXSELF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          V2Ray环境搭建和配置记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-05-15 00:35:00" itemprop="dateCreated datePublished" datetime="2017-05-15T00:35:00+08:00">2017-05-15</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017-05-15-%E9%81%87%E8%A7%81/V2Ray%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017-05-15-遇见/V2Ray环境搭建和配置记录/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>#V2Ray简介</p>
+<blockquote>
+<p>V2Ray 是一个模块化的代理软件包，它的目标是提供常用的代理软件模块，简化网络代理软件的开发</p>
+</blockquote>
+<p>说白了白说了，知道这是一个可以带你翻墙带你飞的东西就好了，像是Shadowsocks一样。尽管他们并不是兄弟关系，不论是开发初衷，功能还是配置等方面、我个人是这样理解的，Shadowsocks就像是唯品会，V2Ray就像是淘宝。都可以剁手买买买，但是前者基本上是服装类，后者除了服装还有更多选择。毕竟V2ray搭建好了经过一番配置，也可以使用Shadowsocks客户端进行连接访问。<br>不过V2ray主要是配置太繁琐，再加上不太有名吧。其实我是觉得V2Ray的功能太多且强大，然后没有出傻瓜的一键功能等，还有就是一些专业术语和配置不太看得懂，以至于并没有像Shadowsocks那么普及。不过最后能愉快的科学上网就好了啊。<br>#V2Ray环境搭建<br>##服务器环境<br>鼓捣这个有部分原因也是因为Vultr到期无力续费，换个工具尝尝鲜，否则我那东京节点速度杠杠的100ms上下。但是万幸我<strong>搬瓦工</strong>续的起啊！<br>所以服务器环境是：</p>
+<blockquote>
+<p>搬瓦工 年付 $3.99 USD<br>RAM 72M<br>Disk 2GB<br>Bandwidth 100G<br>Operating system  **Centos 7 x86_64 **</p>
+</blockquote>
+<p>我在一文章看到说是支持Debian 7、Debian 8、Ubuntu 14、Ubuntu 16、CentOS 7，不支持Centos 6。但是官网是这样说的：</p>
+<blockquote>
+<p>V2Ray 在以下平台中可用：</p>
+<ul>
+<li>Windows Vista 及之后版本（x86 / amd64）；</li>
+<li>Mac OS X 10.7 及之后版本（amd64）；</li>
+<li>Linux 2.6.23 及之后版本（x86 / amd64 / arm / arm64 / mips64 / mips）；<br>包括但不限于 Debian 7 / 8、Ubuntu 12.04 / 14.04 及后续版本、CentOS 6 / 7、Arch Linux；</li>
+<li>FreeBSD (x86 / amd64)；</li>
+<li>OpenBSD (x86 / amd64)；</li>
+</ul>
+</blockquote>
+<p>##安装<br>安装很简单，就一条命令，但是建议安装的Linux是完整版的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -L -s https:&#x2F;&#x2F;install.direct&#x2F;go.sh)</span><br></pre></td></tr></table></figure>
+<p>##配置</p>
+<ol>
+<li> 编辑 /etc/v2ray/config.json 文件来配置你需要的代理方式；</li>
+<li> 运行 service v2ray start 来启动 V2Ray 进程；</li>
+<li> 之后可以使用 service v2ray start|stop|status|reload|restart|force-reload 控制 V2Ray 的运行。<br>config.json 文件是服务器端配置文件。我直接删除重新建了一份，然后本地写好拷贝进去。<br>###服务器配置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;port&quot;: 6666,</span><br><span class="line">    &quot;log&quot;: &#123;</span><br><span class="line">        &quot;access&quot;: &quot;&#x2F;var&#x2F;log&#x2F;v2ray&#x2F;access.log&quot;,</span><br><span class="line">        &quot;error&quot;: &quot;&#x2F;var&#x2F;log&#x2F;v2ray&#x2F;error.log&quot;,</span><br><span class="line">        &quot;loglevel&quot;: &quot;warning&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;inbound&quot;: &#123;</span><br><span class="line">        &quot;protocol&quot;: &quot;vmess&quot;,</span><br><span class="line">        &quot;settings&quot;: &#123;</span><br><span class="line">            &quot;clients&quot;: [&#123;</span><br><span class="line">                &quot;id&quot;: &quot;6b55e8fc-4627-43fe-a917-116664c22f87&quot;,</span><br><span class="line">                &quot;alterId&quot;: 66,</span><br><span class="line">                &quot;level&quot;: 1</span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;outbound&quot;: &#123;</span><br><span class="line">        &quot;protocol&quot;: &quot;freedom&quot;,</span><br><span class="line">        &quot;settings&quot;: &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;inboundDetour&quot;: [&#123;</span><br><span class="line">        &quot;protocol&quot;: &quot;shadowsocks&quot;,</span><br><span class="line">        &quot;port&quot;: 443,</span><br><span class="line">        &quot;settings&quot;: &#123;</span><br><span class="line">            &quot;method&quot;: &quot;chacha20&quot;,</span><br><span class="line">            &quot;password&quot;: &quot;******&quot;,</span><br><span class="line">            &quot;udp&quot;: false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;],</span><br><span class="line">    &quot;outboundDetour&quot;: [&#123;</span><br><span class="line">        &quot;protocol&quot;: &quot;blackhole&quot;,</span><br><span class="line">        &quot;settings&quot;: &#123;&#125;,</span><br><span class="line">        &quot;tag&quot;: &quot;blocked&quot;</span><br><span class="line">    &#125;],</span><br><span class="line">    &quot;routing&quot;: &#123;</span><br><span class="line">        &quot;strategy&quot;: &quot;rules&quot;,</span><br><span class="line">        &quot;settings&quot;: &#123;</span><br><span class="line">            &quot;rules&quot;: [&#123;</span><br><span class="line">                &quot;type&quot;: &quot;field&quot;,</span><br><span class="line">                &quot;ip&quot;: [</span><br><span class="line">                    &quot;0.0.0.0&#x2F;8&quot;,</span><br><span class="line">                    &quot;10.0.0.0&#x2F;8&quot;,</span><br><span class="line">                    &quot;100.64.0.0&#x2F;10&quot;,</span><br><span class="line">                    &quot;127.0.0.0&#x2F;8&quot;,</span><br><span class="line">                    &quot;169.254.0.0&#x2F;16&quot;,</span><br><span class="line">                    &quot;172.16.0.0&#x2F;12&quot;,</span><br><span class="line">                    &quot;192.0.0.0&#x2F;24&quot;,</span><br><span class="line">                    &quot;192.0.2.0&#x2F;24&quot;,</span><br><span class="line">                    &quot;192.168.0.0&#x2F;16&quot;,</span><br><span class="line">                    &quot;198.18.0.0&#x2F;15&quot;,</span><br><span class="line">                    &quot;198.51.100.0&#x2F;24&quot;,</span><br><span class="line">                    &quot;203.0.113.0&#x2F;24&quot;,</span><br><span class="line">                    &quot;::1&#x2F;128&quot;,</span><br><span class="line">                    &quot;fc00::&#x2F;7&quot;,</span><br><span class="line">                    &quot;fe80::&#x2F;10&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;outboundTag&quot;: &quot;blocked&quot;</span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个配置已经包含了Shadowsocks，其中必改的是<strong>id和密码</strong>。其中id可以到<a target="_blank" rel="noopener" href="https://www.uuidgenerator.net/">这个网站</a>生成一个，服务器和客户端同一个。其他的可以参考文档看着改以及增加，官网有很多功能可以加。</p>
+<p>###客户端配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;log&quot;: &#123;</span><br><span class="line">    &quot;loglevel&quot;: &quot;warning&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;inbound&quot;: &#123;</span><br><span class="line">    &quot;port&quot;: 8888,</span><br><span class="line">    &quot;listen&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;protocol&quot;: &quot;socks&quot;,</span><br><span class="line">    &quot;settings&quot;: &#123;</span><br><span class="line">      &quot;auth&quot;: &quot;noauth&quot;,</span><br><span class="line">      &quot;udp&quot;: false,</span><br><span class="line">      &quot;ip&quot;: &quot;127.0.0.1&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;outbound&quot;: &#123;</span><br><span class="line">    &quot;protocol&quot;: &quot;vmess&quot;,</span><br><span class="line">    &quot;settings&quot;: &#123;</span><br><span class="line">      &quot;vnext&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;address&quot;: &quot;your IP&quot;,</span><br><span class="line">          &quot;port&quot;: 6666,</span><br><span class="line">          &quot;users&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">              &quot;id&quot;: &quot;6b558fc-4627-43fe-a5517-11b66c22f87&quot;,</span><br><span class="line">              &quot;alterId&quot;: 66,</span><br><span class="line">              &quot;security&quot;: &quot;auto&quot;</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;mux&quot;: &#123;</span><br><span class="line">      &quot;enabled&quot;: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;outboundDetour&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;protocol&quot;: &quot;freedom&quot;,</span><br><span class="line">      &quot;settings&quot;: &#123;&#125;,</span><br><span class="line">      &quot;tag&quot;: &quot;direct&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;dns&quot;: &#123;</span><br><span class="line">    &quot;servers&quot;: [</span><br><span class="line">      &quot;8.8.8.8&quot;,</span><br><span class="line">      &quot;8.8.4.4&quot;,</span><br><span class="line">      &quot;localhost&quot;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;routing&quot;: &#123;</span><br><span class="line">    &quot;strategy&quot;: &quot;rules&quot;,</span><br><span class="line">    &quot;settings&quot;: &#123;</span><br><span class="line">      &quot;domainStrategy&quot;: &quot;IPIfNonMatch&quot;,</span><br><span class="line">      &quot;rules&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;field&quot;,</span><br><span class="line">          &quot;port&quot;: &quot;1-52&quot;,</span><br><span class="line">          &quot;outboundTag&quot;: &quot;direct&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;field&quot;,</span><br><span class="line">          &quot;port&quot;: &quot;54-79&quot;,</span><br><span class="line">          &quot;outboundTag&quot;: &quot;direct&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;field&quot;,</span><br><span class="line">          &quot;port&quot;: &quot;81-442&quot;,</span><br><span class="line">          &quot;outboundTag&quot;: &quot;direct&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;field&quot;,</span><br><span class="line">          &quot;port&quot;: &quot;444-65535&quot;,</span><br><span class="line">          &quot;outboundTag&quot;: &quot;direct&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;chinasites&quot;,</span><br><span class="line">          &quot;outboundTag&quot;: &quot;direct&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;field&quot;,</span><br><span class="line">          &quot;ip&quot;: [</span><br><span class="line">            &quot;0.0.0.0&#x2F;8&quot;,</span><br><span class="line">            &quot;10.0.0.0&#x2F;8&quot;,</span><br><span class="line">            &quot;100.64.0.0&#x2F;10&quot;,</span><br><span class="line">            &quot;127.0.0.0&#x2F;8&quot;,</span><br><span class="line">            &quot;169.254.0.0&#x2F;16&quot;,</span><br><span class="line">            &quot;172.16.0.0&#x2F;12&quot;,</span><br><span class="line">            &quot;192.0.0.0&#x2F;24&quot;,</span><br><span class="line">            &quot;192.0.2.0&#x2F;24&quot;,</span><br><span class="line">            &quot;192.168.0.0&#x2F;16&quot;,</span><br><span class="line">            &quot;198.18.0.0&#x2F;15&quot;,</span><br><span class="line">            &quot;198.51.100.0&#x2F;24&quot;,</span><br><span class="line">            &quot;203.0.113.0&#x2F;24&quot;,</span><br><span class="line">            &quot;::1&#x2F;128&quot;,</span><br><span class="line">            &quot;fc00::&#x2F;7&quot;,</span><br><span class="line">            &quot;fe80::&#x2F;10&quot;</span><br><span class="line">          ],</span><br><span class="line">          &quot;outboundTag&quot;: &quot;direct&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;chinaip&quot;,</span><br><span class="line">          &quot;outboundTag&quot;: &quot;direct&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>客户端的ip是服务器的ip，id与服务器配置相同，其他的端口之类的和服务器保持一致就行。然后客户端的这个文件放到程序文件夹目录下，替换原有的配置文件。相关客户端文件夹可以到<a target="_blank" rel="noopener" href="https://github.com/v2ray/v2ray-core/releases/latest">github下载页面</a>下载。然后点击文件夹下的两个exe中的一个就行了。w开头的是后台静默运行，另一个则是带命令框运行。其实并无卵用。<br>只是这样浏览器还并不能打开google哦。<br>一是服务器端要打开服务器端的端口，我的是6666。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;public --add-port&#x3D;6666&#x2F;tcp --permanent    &#x2F;&#x2F;永久将6666端口加入开启规则</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<p>不过很意外发现搬瓦工的防火墙默认不开启，<br>二是要给客户端的浏览器设置Sock5代理。Chrome下载SwitchyOmega扩展，火狐可以直接配置，IE我试了下没成功不知原因、<br>#使用感受<br>最大的感受是官网的配置文档我过了一遍，不才很多没看懂。最后是结合其他博文配置好的。速度上来说，似乎可能大概比Shadowsocks快一些？也许心理作用。但是客户端的使用体验上完全没有Shadowsocks好，单单从有UI这个角度说，连个速度显示都没有，当然我没有去尝试第三方的GUI。不过也可以用Shadowsocks来连接它也是良心。目前一切稳定，访问延时100-200ms。偶尔会很多一些。后面再看看是不是可以再优化吧。<br>#参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.v2ray.com/">V2Ray 用户手册</a> 想要详细配置看这个</li>
+<li><a target="_blank" rel="noopener" href="https://toutyrater.github.io/v2ray-guide-pages/">白话文版上手教程</a> 想要一般配置看这个</li>
+<li><a target="_blank" rel="noopener" href="https://www.daehub.com/archives/8491.html">vultr VPS主机安装v2ray代理服务器手记</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/b59150fd8f47">V2Ray环境搭建，支持V2Ray协议和Shadowsocks协议</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016-11-13-%E9%81%87%E8%A7%81/vultr+SSR%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/" rel="prev" title="vultr+SSR安装配置记录">
+      <i class="fa fa-chevron-left"></i> vultr+SSR安装配置记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018-04-02-%E6%8A%80%E6%9C%AF/2018-04-20/" rel="next" title="https原理和Android踩坑">
+      https原理和Android踩坑 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Author</p>
+  <div class="site-description" itemprop="description">Feel The World</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Author</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lxxself.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://lxxself.com/2017-05-15-%E9%81%87%E8%A7%81/V2Ray%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/";
+    this.page.identifier = "2017-05-15-遇见/V2Ray环境搭建和配置记录/";
+    this.page.title = "V2Ray环境搭建和配置记录";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lxxself.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

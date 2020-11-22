@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN,zh-TW,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+<script data-ad-client="ca-pub-2746515851002080" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lxxself.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="那么从何说起呢？因为身在大天朝的原因，而且还听说最近把Gmail的管道都给切断了，想想也是醉了。然后前一段日子买主机空间域名的时候撇到可以利用外国主机搭建代理服务器实现科学上网，这么一想，索性就开始实践了，但是人傻手笨，折腾多番。其实之前并不是没有途径去到外面，但是使用的都是一些免费的vpn类代理软件，比如fqrounter，赛风，易联vpn，电脑端的话就是一些有些fd的代理软件，也有像VPNga">
+<meta property="og:type" content="article">
+<meta property="og:title" content="折腾折腾 我要出去（二）——shadowsocks">
+<meta property="og:url" content="http://lxxself.com/2014-12-31-%E8%BF%87%E5%8E%BB%E7%9A%84/%E6%8A%98%E8%85%BE%E6%8A%98%E8%85%BE%20%E6%88%91%E8%A6%81%E5%87%BA%E5%8E%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94shadowsocks/index.html">
+<meta property="og:site_name" content="LXXSELF">
+<meta property="og:description" content="那么从何说起呢？因为身在大天朝的原因，而且还听说最近把Gmail的管道都给切断了，想想也是醉了。然后前一段日子买主机空间域名的时候撇到可以利用外国主机搭建代理服务器实现科学上网，这么一想，索性就开始实践了，但是人傻手笨，折腾多番。其实之前并不是没有途径去到外面，但是使用的都是一些免费的vpn类代理软件，比如fqrounter，赛风，易联vpn，电脑端的话就是一些有些fd的代理软件，也有像VPNga">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://lxxself.qiniudn.com/wp-content/uploads/2014/12/QQ%E6%88%AA%E5%9B%BE20141231125406.jpg">
+<meta property="og:image" content="http://lxxself.qiniudn.com/wp-content/uploads/2014/12/%E6%90%9C%E7%8B%97%E6%88%AA%E5%9B%BE20141231125519.png">
+<meta property="article:published_time" content="2014-12-31T05:02:00.000Z">
+<meta property="article:modified_time" content="2014-12-31T05:02:00.000Z">
+<meta property="article:author" content="lxxself">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://lxxself.qiniudn.com/wp-content/uploads/2014/12/QQ%E6%88%AA%E5%9B%BE20141231125406.jpg">
+
+<link rel="canonical" href="http://lxxself.com/2014-12-31-%E8%BF%87%E5%8E%BB%E7%9A%84/%E6%8A%98%E8%85%BE%E6%8A%98%E8%85%BE%20%E6%88%91%E8%A6%81%E5%87%BA%E5%8E%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94shadowsocks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>折腾折腾 我要出去（二）——shadowsocks | LXXSELF</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101980994-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-101980994-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LXXSELF</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Feel The World</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-file">
+
+    <a href="http://dsm.lxx.im:9003/" rel="noopener" target="_blank"><i class="fa fa-fw fa-file"></i>文件</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lxxself.com/2014-12-31-%E8%BF%87%E5%8E%BB%E7%9A%84/%E6%8A%98%E8%85%BE%E6%8A%98%E8%85%BE%20%E6%88%91%E8%A6%81%E5%87%BA%E5%8E%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94shadowsocks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Author">
+      <meta itemprop="description" content="Feel The World">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LXXSELF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          折腾折腾 我要出去（二）——shadowsocks
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-12-31 13:02:00" itemprop="dateCreated datePublished" datetime="2014-12-31T13:02:00+08:00">2014-12-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BF%87%E5%8E%BB%E7%9A%84/" itemprop="url" rel="index"><span itemprop="name">过去的</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014-12-31-%E8%BF%87%E5%8E%BB%E7%9A%84/%E6%8A%98%E8%85%BE%E6%8A%98%E8%85%BE%20%E6%88%91%E8%A6%81%E5%87%BA%E5%8E%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94shadowsocks/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014-12-31-过去的/折腾折腾 我要出去（二）——shadowsocks/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>那么从何说起呢？因为身在大天朝的原因，而且还听说最近把Gmail的管道都给切断了，想想也是醉了。然后前一段日子买主机空间域名的时候撇到可以利用<strong>外国主机搭建代理服务器实现科学上网</strong>，这么一想，索性就开始实践了，但是人傻手笨，折腾多番。其实之前并不是没有途径去到外面，但是使用的都是一些免费的vpn类代理软件，比如fqrounter，赛风，易联vpn，电脑端的话就是一些有些fd的代理软件，也有像VPNgate这种样子的。这些优点就是免费，缺点也是免费，因为对于所有人都是如此，那么资源的竞争想必是有的。所以有时候巨慢你！知！不！知！道！但是又买不起那些付费的vpn啊，代理啊，所以每每上网总是郁结。那么为什么要出去呢，额，这个话题嘛比较大，谈不好。那总之就好比有些人为什么要出去旅游一样。当然也因为我自己使用的一些外面的app以及google这样的，所以还是希望能够任性地想出去就出去咯。</p>
+<p>如果你看到了这说明你还是对此有所兴趣的，那么我来讲讲具体的一些东西吧，也算是一次记录。</p>
+<p>那就从shadowsocks说起吧。</p>
+<h2 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a><strong>shadowsocks</strong></h2><p> shadowsocks实质上也是一种socks5代理服务，类似于ssh代理。与vpn的全局代理不同，shadowsocks仅针对浏览器代理，不能代理应用软件，比如youtube、twitter客户端软件。如果把vpn比喻为一把屠龙刀，那么shadowsocks就是一把瑞士军刀，轻巧方便，功能却非常强大。其客户端几乎覆盖所有平台，具体如下，可查看<a target="_blank" rel="noopener" href="https://shadowsocks.com/client.html">https://shadowsocks.com/client.html</a> 和<a target="_blank" rel="noopener" href="http://shadowsocks.org/en/download/clients.html">http://shadowsocks.org/en/download/clients.html</a></p>
+<h4 id="OS-X-客户"><a href="#OS-X-客户" class="headerlink" title="OS X 客户"></a>OS X 客户</h4><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-gui">shadowsocks-gui</a> - Cross-platform GUI powered by node and Webki</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/ohdarling/GoAgentX">GoAgentX</a> - OS X client, with GU</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-iOS/wiki/Shadowsocks-for-OSX-Help">Shadowsocks for Mac</a> - Shadowsocks GUI designed for OS X 10.7+</p>
+</li>
+</ul>
+<h4 id="Windows-客户"><a href="#Windows-客户" class="headerlink" title="Windows 客户"></a>Windows 客户</h4><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://goagentplus.com/">GoAgent+</a> - Windows clien</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-gui">shadowsocks-gui</a> - Cross-platform GUI powered by node and Webki</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/clowwindy/shadowsocks-csharp">shadowsocks-csharp</a> - Windows version with GU</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/dallascao/yingwa">Yingwa</a> - Shadowsocks Windows client</p>
+</li>
+</ul>
+<h4 id="Linux-客户"><a href="#Linux-客户" class="headerlink" title="Linux 客户"></a>Linux 客户</h4><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-gui">shadowsocks-gui</a> - Cross-platform GUI powered node and by Webki</p>
+</li>
+<li><p>  Or use command line versions in <a target="_blank" rel="noopener" href="https://shadowsocks.com/download.html">Server side</a></p>
+</li>
+</ul>
+<h4 id="iOS-客户"><a href="#iOS-客户" class="headerlink" title="iOS 客户"></a>iOS 客户</h4><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-iOS">shadowsocks-iOS</a> - All devices, web browser, global proxy with some restriction</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/linusyang/MobileShadowSocks">MobileShadowSocks</a> - Jailbroken devices only, global proxy with no restriction</p>
+</li>
+</ul>
+<h4 id="Android-客户"><a href="#Android-客户" class="headerlink" title="Android 客户"></a>Android 客户</h4><ul>
+<li>  <a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-android">shadowsocks-android</a></li>
+</ul>
+<h4 id="Router-客户"><a href="#Router-客户" class="headerlink" title="Router 客户"></a>Router 客户</h4><ul>
+<li>  <a target="_blank" rel="noopener" href="https://github.com/haohaolee/shadowsocks-openwrt">shadowsocks-openwrt</a> - works on OpenWRT routers</li>
+</ul>
+<h4 id="实验环"><a href="#实验环" class="headerlink" title="实验环"></a>实验环</h4><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/clowwindy/shadowsocks-ruby">shadowsocks-ruby</a> Ruby versio</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/clowwindy/shadowsocks-chromeapp">shadowsocks-chromeapp</a> - Chrome App</p>
+</li>
+</ul>
+<h4 id="其他支持-Shadowsocks-的上网方"><a href="#其他支持-Shadowsocks-的上网方" class="headerlink" title="其他支持 Shadowsocks 的上网方"></a>其他支持 Shadowsocks 的上网方</h4><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/cyfdecyf/cow">cow</a> - Powerful HTTP proxy, detecting blocked sites automaticall</p>
+</li>
+<li><p>  [pobi](<a target="_blank" rel="noopener" href="https://github.com/jackyz/pobi">https://github.com/jackyz/pobi</a></p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/clowwindy/lightsocks">lightsocks</a> - Transparent TCP prox</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/tuoxie007/Tweet4China2">Tweet4China2</a> - A Twitter client</p>
+</li>
+</ul>
+<h4 id="其他版本（非官方"><a href="#其他版本（非官方" class="headerlink" title="其他版本（非官方"></a>其他版本（非官方</h4><ul>
+<li>  <a target="_blank" rel="noopener" href="https://github.com/lerry/balan-proxy">balan-proxy</a></li>
+</ul>
+<p> 本人使用的是win下的<a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-gui">shadowsocks-gui</a>和Android下的<a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-android">shadowsocks-android</a>，使用发现可以多客户端登陆同一账号。也查了一些wiki，找到了真正的官网，并查到shadowsocks的开发团队，见<a target="_blank" rel="noopener" href="http://shadowsocks.org/en/about/contributors.html%EF%BC%8C%E5%A5%BD%E5%83%8F%E4%B9%9F%E6%98%AF%E4%B8%8D%E5%AE%B9%E6%98%93%E6%89%93%E5%BC%80%E7%9A%84%EF%BC%8C%E9%82%A3%E6%88%91%E5%86%8D%E8%B4%B4%E4%B8%80%E4%B8%8B%E3%80%82">http://shadowsocks.org/en/about/contributors.html，好像也是不容易打开的，那我再贴一下。</a></p>
+<h1 id="Contributor"><a href="#Contributor" class="headerlink" title="Contributor"></a>Contributor</h1><h2 id="Core-Contributor"><a href="#Core-Contributor" class="headerlink" title="Core Contributor"></a>Core Contributor</h2><p> <a target="_blank" rel="noopener" href="https://github.com/clowwindy">@clowwindy</a></p>
+<p> The creator of shadowsocks and the maintainor of shadowsocks-python/nodejs/gui/iOS.</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/cyfdecyf">@cyfdecyf</a></p>
+<p> The maintainor of shadowsocks-go and <a target="_blank" rel="noopener" href="https://github.com/cyfdecyf/cow">cow</a>.</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/madeye">@madeye</a></p>
+<p> The maintainor of shadowsocks-libev/android and this project site.</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/linusyang">@linusyang</a></p>
+<p> The maintainor of shadowsocks-libev and <a target="_blank" rel="noopener" href="https://github.com/linusyang/MobileShadowSocks">MobileShadowSocks</a>.</p>
+<h2 id="Other-Contributor"><a href="#Other-Contributor" class="headerlink" title="Other Contributor"></a>Other Contributor</h2><p> <a target="_blank" rel="noopener" href="https://github.com/ohdarling">@ohdarling</a></p>
+<p> The maintainor of <a target="_blank" rel="noopener" href="https://github.com/ohdarling/GoAgentX">GoAgentX</a>.</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/fqrouter">@fqrouter</a></p>
+<p> The maintainor of <a target="_blank" rel="noopener" href="https://github.com/fqrouter/fqrouter">fqrouter</a>.</p>
+<p> 在此十分感谢这些伟大的程序员咯。当然还说了，注意鉴别国内的伪造的shadowsocks官网。最后附上该项目的github地址：<a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks" title="https://github.com/shadowsocks/shadowsocks">https://github.com/shadowsocks/shadowsocks</a></p>
+<p> 说了这么多，简单一句话，有了shadowsocks账号就可以愉悦地玩耍了！那么怎么获得呢，很简单，要么找要么买。找的话，因为网上会有一些热心奉献的人会共享出自己的账号，以及一些相关的公益组织，这个纯属自己找了。买嘛，那总之有钱总会知道怎么买的嘛，但是也不便宜的说，所以买当中还有一条，<strong>就是自己建账号，这就是本文想传达的东西。通过vps自建shadowsocks服务器。</strong></p>
+<p> 先假设你已经有账号了，讲讲怎么使用win下的客户端吧。很简单，下载shadowsocks（下载资源在文末）并安装，输入相关账号即可。如图<a target="_blank" rel="noopener" href="http://lxxself.qiniudn.com/wp-content/uploads/2014/12/QQ%E6%88%AA%E5%9B%BE20141231125406.jpg"><img src="http://lxxself.qiniudn.com/wp-content/uploads/2014/12/QQ%E6%88%AA%E5%9B%BE20141231125406.jpg" alt="QQ截图20141231125406"></a></p>
+<p> 然后右键启用代理即可，服务器ip就是你vps的ip，就是账号名，端口是服务器端口，前三个会有所不同，其他的基本不用变。如果不想有一些更深入的设置，这样就好了，打开浏览器畅游就好。</p>
+<p> <a target="_blank" rel="noopener" href="http://lxxself.qiniudn.com/wp-content/uploads/2014/12/%E6%90%9C%E7%8B%97%E6%88%AA%E5%9B%BE20141231125519.png"><img src="http://lxxself.qiniudn.com/wp-content/uploads/2014/12/%E6%90%9C%E7%8B%97%E6%88%AA%E5%9B%BE20141231125519.png" alt="搜狗截图20141231125519"></a></p>
+<p> 就是这么简单。和普通的vpn连接一样。就此说了一大推的shadowsocks说完了。</p>
+<p> 客户端下载： <a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1pJA0vyF">http://pan.baidu.com/s/1pJA0vyF</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2014-12-30-%E8%BF%87%E5%8E%BB%E7%9A%84/%E6%8A%98%E8%85%BE%E6%8A%98%E8%85%BE%20%E6%88%91%E8%A6%81%E5%87%BA%E5%8E%BB%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="折腾折腾 我要出去（一）">
+      <i class="fa fa-chevron-left"></i> 折腾折腾 我要出去（一）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015-01-06-%E8%BF%87%E5%8E%BB%E7%9A%84/%E6%80%8E%E4%B9%88%E5%B0%86QQ%E5%A5%BD%E5%8F%8B%E7%94%9F%E6%97%A5%E5%90%8C%E6%AD%A5%E5%88%B0%E6%89%8B%E6%9C%BA%E6%97%A5%E5%8E%86/" rel="next" title="怎么将qq好友生日同步到手机日历">
+      怎么将qq好友生日同步到手机日历 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shadowsocks"><span class="nav-number">1.</span> <span class="nav-text">shadowsocks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OS-X-%E5%AE%A2%E6%88%B7"><span class="nav-number">1.0.1.</span> <span class="nav-text">OS X 客户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows-%E5%AE%A2%E6%88%B7"><span class="nav-number">1.0.2.</span> <span class="nav-text">Windows 客户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux-%E5%AE%A2%E6%88%B7"><span class="nav-number">1.0.3.</span> <span class="nav-text">Linux 客户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iOS-%E5%AE%A2%E6%88%B7"><span class="nav-number">1.0.4.</span> <span class="nav-text">iOS 客户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android-%E5%AE%A2%E6%88%B7"><span class="nav-number">1.0.5.</span> <span class="nav-text">Android 客户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Router-%E5%AE%A2%E6%88%B7"><span class="nav-number">1.0.6.</span> <span class="nav-text">Router 客户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%8E%AF"><span class="nav-number">1.0.7.</span> <span class="nav-text">实验环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%94%AF%E6%8C%81-Shadowsocks-%E7%9A%84%E4%B8%8A%E7%BD%91%E6%96%B9"><span class="nav-number">1.0.8.</span> <span class="nav-text">其他支持 Shadowsocks 的上网方</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%89%88%E6%9C%AC%EF%BC%88%E9%9D%9E%E5%AE%98%E6%96%B9"><span class="nav-number">1.0.9.</span> <span class="nav-text">其他版本（非官方</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Contributor"><span class="nav-number"></span> <span class="nav-text">Contributor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-Contributor"><span class="nav-number">1.</span> <span class="nav-text">Core Contributor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-Contributor"><span class="nav-number">2.</span> <span class="nav-text">Other Contributor</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Author</p>
+  <div class="site-description" itemprop="description">Feel The World</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Author</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lxxself.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://lxxself.com/2014-12-31-%E8%BF%87%E5%8E%BB%E7%9A%84/%E6%8A%98%E8%85%BE%E6%8A%98%E8%85%BE%20%E6%88%91%E8%A6%81%E5%87%BA%E5%8E%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94shadowsocks/";
+    this.page.identifier = "2014-12-31-过去的/折腾折腾 我要出去（二）——shadowsocks/";
+    this.page.title = "折腾折腾 我要出去（二）——shadowsocks";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lxxself.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
