@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN,zh-TW,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+
+<script data-ad-client="ca-pub-2746515851002080" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lxxself.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="分享一些gost的自用操作。 【gost的dns代理解锁Netflix】前因在使用了一段时间gost实现的https服务之后，出现了需要观看Netflix的需求。之前通过机场的节点开通了会员，观看过一阵后觉得Netflix还是很值得的，特别是土区和阿区。但是Netflix一般都需要原生IP才能观看，何为原生IP，简单的理解就是IP所在的机器是A地区，IP理论上被分配的区域也是A地区。那么我就需要一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的gost实践(二)">
+<meta property="og:url" content="http://lxxself.com/2020-05-01-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5-%E4%BA%8C/index.html">
+<meta property="og:site_name" content="LXXSELF">
+<meta property="og:description" content="分享一些gost的自用操作。 【gost的dns代理解锁Netflix】前因在使用了一段时间gost实现的https服务之后，出现了需要观看Netflix的需求。之前通过机场的节点开通了会员，观看过一阵后觉得Netflix还是很值得的，特别是土区和阿区。但是Netflix一般都需要原生IP才能观看，何为原生IP，简单的理解就是IP所在的机器是A地区，IP理论上被分配的区域也是A地区。那么我就需要一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-01T08:08:47.000Z">
+<meta property="article:modified_time" content="2020-11-22T07:11:15.352Z">
+<meta property="article:author" content="lxxself">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lxxself.com/2020-05-01-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5-%E4%BA%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>我的gost实践(二) | LXXSELF</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101980994-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-101980994-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LXXSELF</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Feel The World</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-file">
+
+    <a href="http://dsm.lxx.im:9003/" rel="noopener" target="_blank"><i class="fa fa-fw fa-file"></i>文件</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lxxself.com/2020-05-01-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5-%E4%BA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Author">
+      <meta itemprop="description" content="Feel The World">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LXXSELF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          我的gost实践(二)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-01 16:08:47" itemprop="dateCreated datePublished" datetime="2020-05-01T16:08:47+08:00">2020-05-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-22 15:11:15" itemprop="dateModified" datetime="2020-11-22T15:11:15+08:00">2020-11-22</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020-05-01-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5-%E4%BA%8C/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-05-01-记录/我的gost实践-二/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>分享一些gost的自用操作。</p>
+<h1 id="【gost的dns代理解锁Netflix】"><a href="#【gost的dns代理解锁Netflix】" class="headerlink" title="【gost的dns代理解锁Netflix】"></a>【gost的dns代理解锁Netflix】</h1><h2 id="前因"><a href="#前因" class="headerlink" title="前因"></a>前因</h2><p>在使用了一段时间gost实现的https服务之后，出现了需要观看Netflix的需求。之前通过机场的节点开通了会员，观看过一阵后觉得Netflix还是很值得的，特别是土区和阿区。但是Netflix一般都需要原生IP才能观看，何为原生IP，简单的理解就是IP所在的机器是A地区，IP理论上被分配的区域也是A地区。<br>那么我就需要一个原生IP，意外的发现自己持有的一个搬瓦工传家宝可能可以有原生IP。参考来源于<a href="https://www.bwgyhw.cn/bandwagonhost-netflix/" target="_blank" rel="noopener">《搬瓦工可以看Netflix(奈飞)吗？哪些机房可以看Netflix？》</a>。选择切换到搬瓦工弗里蒙特机房，没想到一切一个准，只是对国内速度不怎么好。那没事我们可以利用DNS解锁啊——<a href="https://www.newlearner.site/2019/04/12/netflix-proxy.html" target="_blank" rel="noopener">《使用Netflix-proxy搭建奈飞中转代理》</a>。<br>所以由此而言，观看奈飞有两种途径：</p>
+<ol>
+<li>连接有原生IP的VPS</li>
+<li>使用原生IP的VPS搭建DNS代理供其他VPS使用</li>
+</ol>
+<h2 id="dns代理解析"><a href="#dns代理解析" class="headerlink" title="dns代理解析"></a>dns代理解析</h2><p>那这和gost又有什么关系呢？<br>一般而言，使用DNS解锁，都需要修改VPS系统的DNS，一般是修改<code>/etc/resolv.conf</code>文件。但是GOST在2.10版本中增加了DNS代理服务，也就是说不需要去修改系统级的DNS，只针对某个代理设置。举例如下：<br>设US为有美国原生IP的VPS（即我的搬瓦工），设SP为对国内连接速度友好的VPS但不能观看Netflix。</p>
+<ol>
+<li>首先参考上文在US搭建DNS搭建。</li>
+<li>SP原本使用gost的https服务为：<code>gost -L &quot;http2://${USER}:${PASS}@${BIND_IP}:${PORT}?cert=${CERT}&amp;key=${KEY}</code>,那么根据<a href="https://docs.ginuerzh.xyz/gost/resolver/" target="_blank" rel="noopener">gost使用说明</a>添加DNS参数后：<code>gost -L &quot;http2://${USER}:${PASS}@${BIND_IP}:${PORT}?cert=${CERT}&amp;key=${KEY}&amp;dns=${US的IP}:53/udp</code>。添加的内容为<code>dns=${US的IP}:53/udp</code>，具体使用<code>?</code>还是<code>&amp;</code>连接和GET网络请求格式相同。dns的协议也可以为tcp/http/tls，要根据dns支持的协议选择。</li>
+<li>客户端连接方式不需要改变，但已可看Netflix。</li>
+</ol>
+<p>但这么操作发现一个问题，对于系统设置DNS解锁Netflix的方式，网上均表示Netflix显示的内容为DNS的IP所在地区（即不管修改DNS的VPS是哪里的内容均为DNS的区域）。但本人使用发现gost的这种方式，<strong>发现却是Netflix显示的内容是所连VPS的地区</strong>。</p>
+<h1 id="【gost-zerotier组网】"><a href="#【gost-zerotier组网】" class="headerlink" title="【gost+zerotier组网】"></a>【gost+zerotier组网】</h1><p><a href="https://www.zerotier.com/" target="_blank" rel="noopener">zerotier</a>是什么？简单的理解就是，可以使得多台位于不同网络环境下的机器组合成为像在同一个局域网环境的服务。这些机器可以是win/mac/linux/android/ios等等。它可以为每个加入的机器分配一个单独的局域网IP，让你可以像访问局域网设备一样访问任一加入的机器。这里有一篇介绍<a href="https://post.smzdm.com/p/741270/" target="_blank" rel="noopener">无公网IP搞定群晖+ZEROTIER ONE实现内网穿透</a>，作者使用了zerotier实现了外部网络访问家里的群晖，不需要公网IP，使用流量访问群晖就像在家里wifi环境下访问群晖一样。<br>那这和gost又有什么关系呢？<br>对于可以当做代理的VPS必定都会有公网IP，gost实现的任一代理服务都可以通过公网实现。使用zerotier岂不是多此一举？<br>zerotier的用途确实可以实现没有公网IP的设备间的互访，但它对于任一设备间的互访的实现逻辑都像是使用VPN一般，或者说设备间的互访是建立在一条专有的虚拟隧道一样，不能说公网上对这条隧道无感知，但这条隧道内的通信是安全的。<a href="https://www.v2ex.com/t/637202" target="_blank" rel="noopener">zerotier 数据传输具有安全性吗？</a><br>其中一个特点就是内部端口的开放，公网是无感知的。</p>
+<h2 id="zerotier下使用gost"><a href="#zerotier下使用gost" class="headerlink" title="zerotier下使用gost"></a>zerotier下使用gost</h2><p>zerotier的使用可以参考上文介绍。以下是一些常用命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">linux安装脚本</span></span><br><span class="line">curl -s https://install.zerotier.com/ | sudo bash</span><br><span class="line"><span class="meta">#</span><span class="bash">客户端目录路径</span></span><br><span class="line">cd /var/lib/zerotier-one</span><br><span class="line"><span class="meta">#</span><span class="bash">重启客户端</span></span><br><span class="line">systemctl restart zerotier-one</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">zerotier-cli用法指引</span></span><br><span class="line">zerotier-cli info           #查看当前zerotier-one的信息</span><br><span class="line">zerotier-cli listpeers          #列出所有的peers</span><br><span class="line">zerotier-cli listnetworks       #列出加入的所有的网络</span><br><span class="line">zerotier-cli join &lt;network&gt;     #加入某个网络</span><br><span class="line">zerotier-cli leave &lt;network&gt;        #离开某个网络</span><br><span class="line">zerotier-cli listmoons          #列出加入的Moon节点</span><br><span class="line">zerotier-cli orbit &lt;world ID&gt; &lt;seed&gt;    #加入某个Moon节点</span><br><span class="line">zerotier-cli deorbit &lt;world ID&gt;     #离开某个Moon节点</span><br></pre></td></tr></table></figure>
+<p>那么“局域网”搞定了，如何使用gost呢？</p>
+<ol>
+<li><p>首先在装好zerotier的VPS查询当前局域网的IP:<code>ifconfig</code>，一般是最底下一个。也可以在zerotier后台查看。</p>
+</li>
+<li><p>假设查到的IP是：<code>10.147.20.66</code>,使用gost像是给局域网开一个代理一样开代理就好。例如一些简单的，这些代理只针对zerotier这个局域网所在的网段，且对于大部分VPS甚至不用设置防火墙规则。可以尝试在<a href="https://tool.chinaz.com/port" target="_blank" rel="noopener">端口扫描</a>检测相关端口在公网是否开启。</p>
+<ul>
+<li>http代理<code>gost -L http://10.147.20.66:8080</code></li>
+<li>socks5代理<code>gost -L socks5://10.147.20.66:1080</code></li>
+<li>混合http+socks5代理<code>gost -L 10.147.20.66:1000</code></li>
+</ul>
+</li>
+<li><p>客户端的连接就很简单了，使用<a href="https://chrome.google.com/webstore/detail/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="noopener">Proxy SwitchyOmega</a>这样的插件直接在浏览器设置相关代理即可，就像是连接局域网代理或本机代理一样。当然使用gost再多转换一下也可。<strong>当然前提是被连接和去连接的设备都需要再zerotier建立的局域网内！</strong></p>
+</li>
+</ol>
+<p>不过这种方式的组合使用，在联通速率上体验会稍差一些，但在安全性是拿zerotier做背书，基本算是可以保证。</p>
+<h2 id="gost的kcp"><a href="#gost的kcp" class="headerlink" title="gost的kcp"></a>gost的kcp</h2><p>由于这种局域网上的速率问题，进而想到了kcp这种协议，恰好gost也支持。<a href="http://kaiyuan.me/2017/07/29/KCP%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" target="_blank" rel="noopener">KCP: 快速可靠的ARQ协议</a>。简单的理解，KCP就是用带宽换速度，如果速度慢或者丢包严重，那我就“疯狂地重复传”，对于接收者而言就像及时接收了信息，进而表现流畅。当然如果真的丢包严重和不通，那也无济于事。<br>根据我的使用体验，将之前的简单http/socks5代理直接换成kcp转发，在速率上有较大的提升。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">直接使用kcp</span></span><br><span class="line">gost -L kcp://10.147.20.66:9999</span><br><span class="line"><span class="meta">#</span><span class="bash">组合其他协议类型如socks5</span></span><br><span class="line">gost -L socks5+kcp://10.147.20.66:9999</span><br></pre></td></tr></table></figure>
+<p>不过这样而言，在客户端的使用上会有一些局限，必然需要使用gost再次转换成常规的http或socks5代理:<code>gost -L :1080 -F kcp://10.147.20.66:9999</code>。但在速度上绝对有质的飞跃。<br>当然其实除了kcp还有一种谷歌出品的类kcp方式协议<a href="https://docs.ginuerzh.xyz/gost/quic/" target="_blank" rel="noopener">QUIC</a>，同样试验了下，表现不及kcp。<br><strong>提醒：不论何种方式，只要是在zerotier网络下的连接，偶尔依然会存在卡顿</strong></p>
+<h1 id="【gost负载均衡】"><a href="#【gost负载均衡】" class="headerlink" title="【gost负载均衡】"></a>【gost负载均衡】</h1><p>关于负载均衡，其实在很多地方都有，比如Nginx的负载均衡，更相似的则是一些ss桌面客户端的负载均衡。负载均衡的前提是你有多个可连接的代理，且最好是具有相同协议、用户名、密码、端口。负载均衡能达到的目的就是分散针对某个VPS的集中压力，其实这一点对于个人使用完全不需要。但负载均衡既然是分散火力？那我不针对减压VPS，而是实现类似CDN的效果呢？也许CDN不那么恰当，那我要实现的是多线路到达指定VPS，以此使得连接具有更高的可到达率。</p>
+<ol>
+<li>首先要有端口转发，比如<a href="https://olvps.com/aff.php?aff=490" target="_blank" rel="noopener">OLVPS</a>的<a href="https://olvps.com/cart.php?gid=20&aff=490" target="_blank" rel="noopener">端口转发服务</a>，他家端口转发服务目前有常州三线、枣庄联通、佛山电信和IPLC线路。</li>
+<li>设置多个地区的转发到同一国外代理，最好是结合<a href="http://ping.chinaz.com/" target="_blank" rel="noopener">ping检测</a>再设置，那么由此就产生了多个代理节点，他们除了IP和端口其他都一直，最后落地到达的IP都是同一国外VPS。</li>
+<li>使用<a href="https://docs.ginuerzh.xyz/gost/load-balancing/" target="_blank" rel="noopener">gost负载均衡</a>方式连接他们，例如<code>gost -L=:8080 -F=&#39;http://localhost:8080?ip=192.168.1.1,192.168.1.2:8081,192.168.1.3:8082&amp;strategy=round&amp;max_fails=1&amp;fail_timeout=30s&#39;</code>。不使用代理链的方式，是为了避免一些网站的IP来源检测。这样就可以充分利用端口转发分流传输数据，保证至少总有一条线路可达。但是实测发现，因为gost的负载均衡的策略并不是十分理想，基本就是轮训和随机，且没有一些指定机制等等。所以使用上其实要排除一些十分慢的线路。使用时，当某次连接较慢时，尝试刷新</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020-04-28-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5(%E4%B8%80)/" rel="prev" title="我的gost实践(一)">
+      <i class="fa fa-chevron-left"></i> 我的gost实践(一)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020-05-01-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5(%E4%BA%8C)/" rel="next" title="我的gost实践(二)">
+      我的gost实践(二) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#【gost的dns代理解锁Netflix】"><span class="nav-number">1.</span> <span class="nav-text">【gost的dns代理解锁Netflix】</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前因"><span class="nav-number">1.1.</span> <span class="nav-text">前因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dns代理解析"><span class="nav-number">1.2.</span> <span class="nav-text">dns代理解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#【gost-zerotier组网】"><span class="nav-number">2.</span> <span class="nav-text">【gost+zerotier组网】</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zerotier下使用gost"><span class="nav-number">2.1.</span> <span class="nav-text">zerotier下使用gost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gost的kcp"><span class="nav-number">2.2.</span> <span class="nav-text">gost的kcp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#【gost负载均衡】"><span class="nav-number">3.</span> <span class="nav-text">【gost负载均衡】</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Author</p>
+  <div class="site-description" itemprop="description">Feel The World</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Author</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://lxxself.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://lxxself.com/2020-05-01-%E8%AE%B0%E5%BD%95/%E6%88%91%E7%9A%84gost%E5%AE%9E%E8%B7%B5-%E4%BA%8C/";
+    this.page.identifier = "2020-05-01-记录/我的gost实践-二/";
+    this.page.title = "我的gost实践(二)";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lxxself.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
